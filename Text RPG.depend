@@ -1,0 +1,47 @@
+# depslib dependency file v1.0
+1526322993 source:d:\cpp practice\text rpg\main.cpp
+	<iostream>
+	"charCreate.h"
+	"player.h"
+	"utils.h"
+	"game.h"
+
+1526264640 source:d:\cpp practice\text rpg\player.cpp
+	"player.h"
+
+1526323056 d:\cpp practice\text rpg\player.h
+	<iostream>
+
+1526323541 source:d:\cpp practice\text rpg\game.cpp
+	"game.h"
+
+1526322911 d:\cpp practice\text rpg\game.h
+	<iostream>
+	<math.h>
+	"player.h"
+	"utils.h"
+	"choice.h"
+
+1526084569 source:d:\cpp practice\text rpg\charcreate.cpp
+	"charCreate.h"
+
+1526084692 d:\cpp practice\text rpg\charcreate.h
+	<iostream>
+	"player.h"
+	"utils.h"
+
+1522576851 d:\cpp practice\text rpg\utils.h
+	<iostream>
+	<algorithm>
+
+1525897220 source:d:\cpp practice\text rpg\utils.cpp
+	"utils.h"
+
+1526322595 d:\cpp practice\text rpg\choice.h
+	<iostream>
+	<vector>
+	<tuple>
+
+1526007461 source:d:\cpp practice\text rpg\choice.cpp
+	"choice.h"
+
