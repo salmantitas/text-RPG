@@ -76,9 +76,28 @@ Choice game::warriorStoryline()
 
     vector<string> questionBanditStr;
     questionBanditStr.push_back("You ask the bandit about the whereabouts of his fellow criminals. However, the bandit remains silent.");
-    questionBanditStr.push_back(unfinished);
+    questionBanditStr.push_back("You consider your options. You could torture the bandit until he speaks. Or you could offer him a better deal.");
+    questionBanditStr.push_back("[1] Torture.");
+    questionBanditStr.push_back("[2] Deal.");
     Choice questionBandit(questionBanditStr);
-    questionBandit.choices.push_back(end);
+
+    vector<string> tortureBanditStr;
+    tortureBanditStr.push_back("You torture the bandit. After a certain point, he breaks and tells you the whereabouts of their last hideout.");
+    tortureBanditStr.push_back(unfinished);
+    Choice tortureBandit(tortureBanditStr);
+    tortureBandit.choices.push_back(end);
+    tortureBandit.consequences.push_back(KARMA_DROP);
+
+    vector<string> dealBanditStr;
+    dealBanditStr.push_back("You offer deal. He happy.");
+    dealBanditStr.push_back(unfinished);
+    Choice dealBandit(dealBanditStr);
+    dealBandit.choices.push_back(end);
+    dealBandit.consequences.push_back(KARMA_BOOST);
+    dealBandit.consequences.push_back(WIS_BOOST);
+
+    questionBandit.choices.push_back(tortureBandit);
+    questionBandit.choices.push_back(dealBandit);
 
     defendVillage.choices.push_back(killBandit);
     defendVillage.choices.push_back(questionBandit);
