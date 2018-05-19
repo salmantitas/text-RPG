@@ -34,9 +34,13 @@ private:
 
     Choice warriorStoryline();
 
-//    Choice mageStoryline();
+    Choice warriorFightPath();
 
-//    Choice rogueStoryline();
+    Choice warriorRunPath();
+
+    Choice mageStoryline();
+
+    Choice rogueStoryline();
 
     Choice endChoice();
 

@@ -3,6 +3,7 @@
 using namespace std;
 
 string unfinished = "Unfinished storyline. Press [1] to end game.";
+Choice fin;
 
 game::game(Player player)
 {
@@ -12,6 +13,7 @@ game::game(Player player)
 
 void game::runGame()
 {
+    fin = endChoice();
     createChoices();
 
 	string input;
@@ -35,6 +37,12 @@ void game::runGame()
     quit();
 }
 
+void game::createChoices()
+{
+    choiceTree = warriorStoryline();
+    current = &choiceTree;
+}
+
 Choice game::warriorStoryline()
 {
     vector<string> rootStr;
@@ -47,9 +55,15 @@ Choice game::warriorStoryline()
     rootStr.push_back("Press [1] to stay and fight!");
     rootStr.push_back("Press [2] to run.");
     Choice root(rootStr);
+    Choice fightPath = warriorFightPath();
+    Choice runPath = warriorRunPath();
+    root.choices.push_back(warriorFightPath());
+    root.choices.push_back(warriorRunPath());
+    return root;
+}
 
-    Choice end = endChoice();
-
+Choice game::warriorFightPath()
+{
     vector<string> defendVillageStr;
     defendVillageStr.push_back("You decide to stay and fight, for honour and for glory.");
     defendVillageStr.push_back("Should you prevail, you will have saved everyone you know and cared for.");
@@ -70,7 +84,7 @@ Choice game::warriorStoryline()
     killBanditStr.push_back("You decide that because of the crime commited against your people, this bandit has no right to live.");
     killBanditStr.push_back(unfinished);
     Choice killBandit(killBanditStr);
-    killBandit.choices.push_back(end);
+    killBandit.choices.push_back(fin);
     killBandit.consequences.push_back(INT_DROP);
 
     vector<string> questionBanditStr;
@@ -84,14 +98,14 @@ Choice game::warriorStoryline()
     tortureBanditStr.push_back("You torture the bandit. After a certain point, he breaks and tells you the whereabouts of their last hideout.");
     tortureBanditStr.push_back(unfinished);
     Choice tortureBandit(tortureBanditStr);
-    tortureBandit.choices.push_back(end);
+    tortureBandit.choices.push_back(fin);
     tortureBandit.consequences.push_back(KARMA_DROP);
 
     vector<string> dealBanditStr;
     dealBanditStr.push_back("You offer deal. He happy.");
     dealBanditStr.push_back(unfinished);
     Choice dealBandit(dealBanditStr);
-    dealBandit.choices.push_back(end);
+    dealBandit.choices.push_back(fin);
     dealBandit.consequences.push_back(KARMA_BOOST);
     dealBandit.consequences.push_back(WIS_BOOST);
 
@@ -101,6 +115,11 @@ Choice game::warriorStoryline()
     defendVillage.choices.push_back(killBandit);
     defendVillage.choices.push_back(questionBandit);
 
+    return defendVillage;
+}
+
+Choice game::warriorRunPath()
+{
     vector<string> abandonVillageStr;
     abandonVillageStr.push_back("You grab your belongings and run.");
     abandonVillageStr.push_back("The screams of those being butchered fill the air, but you keep running.");
@@ -115,13 +134,13 @@ Choice game::warriorStoryline()
     sleepRoadStr.push_back("You spend the night beside the road.");
     sleepRoadStr.push_back(unfinished);
     Choice sleepRoad(sleepRoadStr);
-    sleepRoad.choices.push_back(end);
+    sleepRoad.choices.push_back(fin);
 
     vector<string> sleepForestStr;
     sleepForestStr.push_back("You are sleeping on the forest floor.");
     sleepForestStr.push_back(unfinished);
     Choice sleepForest(sleepForestStr);
-    sleepForest.choices.push_back(end);
+    sleepForest.choices.push_back(fin);
 
     vector<string> wolfDeathStr;
     wolfDeathStr.push_back("Wolves eat you.");
@@ -133,19 +152,8 @@ Choice game::warriorStoryline()
 
     abandonVillage.choices.push_back(sleepRoad);
     abandonVillage.choices.push_back(sleepForest);
-
-
-    root.choices.push_back(defendVillage);
-    root.choices.push_back(abandonVillage);
-    return root;
+    return abandonVillage;
 }
-
-void game::createChoices()
-{
-    choiceTree = warriorStoryline();
-    current = &choiceTree;
-}
-
 
 void game::playChoices()
 {
