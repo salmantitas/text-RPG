@@ -74,7 +74,7 @@ private:
 
     void karmaDrop();
 
-    void condConsHelper(int att, int check, int cond, int i, std::string txt);
+    void condConsHelper(double att, double check, int cond, std::string txt);
 
 public:
     Player *thyself; // For comic purposes

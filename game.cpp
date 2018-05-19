@@ -262,7 +262,7 @@ void game::playConsequences()
 }
 
 
-void game::condConsHelper(int att, int check, int cond, int i, string txt)
+void game::condConsHelper(double att, double check, int cond, string txt)
 {
     if (cond < 0)
     {
@@ -289,112 +289,53 @@ void game::playCondConsequences()
     {
         for (tuple<int, double, int> i : current->conditionalConsequences)
         {
+            double num = get<1>(i);
             switch(get<0>(i))
             {
             case STR_DROP:
-                if (thyself->getSTR() < get<1>(i))
-                {
-                    cout << "Your strength was too low." << endl;
-                    current = &current->conditionalChoices[get<2>(i)];
-                    playChoices();
-                }
-                    break;
+                condConsHelper(thyself->getSTR(), num, -1, "strength");
+                goto CONSEQUENCE;
             case STR_BOOST:
-                if (thyself->getSTR() > get<1>(i))
-                {
-                    cout << "You were strong enough." << endl;
-                    current = &current->conditionalChoices[get<2>(i)];
-                    playChoices();
-                }
-                    break;
+                condConsHelper(thyself->getSTR(), num, 1, "strength");
+                goto CONSEQUENCE;
             case DEF_DROP:
-                if (thyself->getDEF() < get<1>(i))
-                {
-                    cout << "Your defense was too low." << endl;
-                    current = &current->conditionalChoices[get<2>(i)];
-                    playChoices();
-                }
-                    break;
+                condConsHelper(thyself->getDEF(), num, -1, "defense");
+                goto CONSEQUENCE;
             case DEF_BOOST:
-                if (thyself->getDEF() > get<1>(i))
-                {
-                    cout << "Your defense was good enough." << endl;
-                    current = &current->conditionalChoices[get<2>(i)];
-                    playChoices();
-                }
-                    break;
+                condConsHelper(thyself->getDEF(), num, 1, "defense");
+                goto CONSEQUENCE;
             case AGL_DROP:
-                if (thyself->getAGL() < get<1>(i))
-                {
-                    cout << "Your agility was too low." << endl;
-                    current = &current->conditionalChoices[get<2>(i)];
-                    playChoices();
-                }
-                    break;
+                condConsHelper(thyself->getAGL(), num, -1, "agility");
+                goto CONSEQUENCE;
             case AGL_BOOST:
-                if (thyself->getAGL() > get<1>(i))
-                {
-                    cout << "Your agility was good enough." << endl;
-                    current = &current->conditionalChoices[get<2>(i)];
-                    playChoices();
-                }
-                    break;
+                condConsHelper(thyself->getAGL(), num, 1, "agility");
+                goto CONSEQUENCE;
             case DEX_DROP:
-                if (thyself->getDEX() < get<1>(i))
-                {
-                    cout << "Your dexterity was too low." << endl;
-                    current = &current->conditionalChoices[get<2>(i)];
-                    playChoices();
-                }
-                    break;
+                condConsHelper(thyself->getDEX(), num, -1, "dexterity");
+                goto CONSEQUENCE;
             case DEX_BOOST:
-                if (thyself->getDEX() > get<1>(i))
-                {
-                    cout << "Your dexterity was good enough." << endl;
-                    current = &current->conditionalChoices[get<2>(i)];
-                    playChoices();
-                }
-                    break;
+                condConsHelper(thyself->getDEX(), num, 1, "dexterity");
+                goto CONSEQUENCE;
             case INT_DROP:
-                if (thyself->getINT() < get<1>(i))
-                {
-                    cout << "Your intelligence was too low." << endl;
-                    current = &current->conditionalChoices[get<2>(i)];
-                    playChoices();
-                }
-                    break;
+                condConsHelper(thyself->getINT(), num, -1, "intelligence");
+                goto CONSEQUENCE;
             case INT_BOOST:
-                if (thyself->getINT() > get<1>(i))
-                {
-                    cout << "Your intelligence was good enough." << endl;
-                    current = &current->conditionalChoices[get<2>(i)];
-                    playChoices();
-                }
-                    break;
+                condConsHelper(thyself->getINT(), num, 1, "intelligence");
+                goto CONSEQUENCE;
             case WIS_DROP:
-                if (thyself->getWIS() < get<1>(i))
-                {
-                    cout << "Your wisdom was too low." << endl;
-                    current = &current->conditionalChoices[get<2>(i)];
-                    playChoices();
-                }
-                    break;
+                condConsHelper(thyself->getWIS(), num, -1, "wisdom");
+                goto CONSEQUENCE;
             case WIS_BOOST:
-                if (thyself->getWIS() > get<1>(i))
-                {
-                    cout << "Your wisdom was good enough." << endl;
-                    current = &current->conditionalChoices[get<2>(i)];
-                    playChoices();
-                }
-                    break;
+                condConsHelper(thyself->getWIS(), num, 1, "wisdom");
+                goto CONSEQUENCE;
             case KARMA_DROP:
-                if (thyself->getKarma() < get<1>(i)*100)
-                {
-                    current = & current->conditionalChoices[get<2>(i)];
-                    cout << "You were too evil." << endl;
-                    playChoices();
-                }
-                break;
+                condConsHelper(thyself->getKarma(), num*100, -1, "karma");
+                goto CONSEQUENCE;
+            case KARMA_BOOST:
+                condConsHelper(thyself->getKarma(), num*100, 1, "karma");
+            CONSEQUENCE:
+                current = &current->conditionalChoices[get<2>(i)];
+                playChoices();
             }
         }
     }

@@ -75,7 +75,7 @@
 	"utils.h"
 	"game.h"
 
-1526633816 d:\text-rpg\game.h
+1526719149 d:\text-rpg\game.h
 	<iostream>
 	<math.h>
 	"player.h"
@@ -88,6 +88,6 @@
 1525897220 source:d:\text-rpg\utils.cpp
 	"utils.h"
 
-1526632927 source:d:\text-rpg\game.cpp
+1526718972 source:d:\text-rpg\game.cpp
 	"game.h"
 
