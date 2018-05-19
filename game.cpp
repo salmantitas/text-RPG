@@ -15,6 +15,7 @@ void game::runGame()
     createChoices();
 
 	string input;
+	TOP:
     cout << "Press button to continue" << endl;
     input = formatInput();
 
@@ -22,18 +23,16 @@ void game::runGame()
     {
         quit();
     }
-    if (input == "S")
-        showStats();
+
+    else if (input == "S")
+    {
+        thyself->showStatus();
+        goto TOP;
+    }
+
     else playChoices();
 
     quit();
-}
-
-void game::showStats()
-{
-    cout << "You are " << thyself->getName() << endl;
-    cout << "Your HP is " << thyself->getHP() << "/" << thyself->getMaxHP() << endl;
-    cout << "Your chosen class is " << thyself->getClass() << endl;
 }
 
 Choice game::warriorStoryline()

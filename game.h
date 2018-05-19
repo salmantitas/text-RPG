@@ -83,8 +83,6 @@ public:
 
     void runGame();
 
-    void showStats();
-
     void createChoices();
 
     void playChoices();
