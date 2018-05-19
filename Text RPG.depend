@@ -53,7 +53,7 @@
 	"player.h"
 	"utils.h"
 
-1526323056 d:\text-rpg\player.h
+1526763812 d:\text-rpg\player.h
 	<iostream>
 
 1522576851 d:\text-rpg\utils.h
@@ -82,12 +82,12 @@
 	"utils.h"
 	"choice.h"
 
-1526264640 source:d:\text-rpg\player.cpp
+1526763815 source:d:\text-rpg\player.cpp
 	"player.h"
 
 1525897220 source:d:\text-rpg\utils.cpp
 	"utils.h"
 
-1526721683 source:d:\text-rpg\game.cpp
+1526763874 source:d:\text-rpg\game.cpp
 	"game.h"
 

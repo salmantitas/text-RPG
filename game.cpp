@@ -39,7 +39,19 @@ void game::runGame()
 
 void game::createChoices()
 {
-    choiceTree = warriorStoryline();
+    int plc = stoi(thyself->getClass(), nullptr, 10);
+    switch(plc)
+    {
+    case 1:
+        choiceTree = warriorStoryline();
+        break;
+    case 2:
+        choiceTree = rogueStoryline();
+        break;
+    case 3:
+        choiceTree = mageStoryline();
+        break;
+    }
     current = &choiceTree;
 }
 
@@ -153,6 +165,19 @@ Choice game::warriorRunPath()
     abandonVillage.choices.push_back(sleepRoad);
     abandonVillage.choices.push_back(sleepForest);
     return abandonVillage;
+}
+
+Choice game::rogueStoryline()
+{
+    vector<string> rootStr;
+    rootStr.push_back(unfinished);
+    Choice root(rootStr);
+    return root;
+}
+
+Choice game::mageStoryline()
+{
+    return rogueStoryline(); // stub
 }
 
 void game::playChoices()

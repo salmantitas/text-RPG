@@ -76,7 +76,9 @@ void Player::setKarma(int num)
     karma = num;
 }
 
-string Player::getClass()
+string Player::getClass() {return playerClass;}
+
+string Player::getClassName()
     {
         string ret;
         if (playerClass == "1")
@@ -126,7 +128,7 @@ void Player::setClass(string inputClass)
 void Player::showStatus(){
    cout << "You are " << name << endl;
    cout << "Your HP is " << HP << "/" << maxHP << endl;
-   cout << "You have chosen class " << getClass() << endl;
+   cout << "You have chosen class " << getClassName() << endl;
    cout << "Attributes" << endl;
    cout << "Strength:     " << STR << endl;
    cout << "Defense:      " << DEF << endl;

@@ -68,6 +68,8 @@ class Player
 
         string getClass();
 
+        string getClassName();
+
         void setClass(string inputClass);
 
         void showStatus();
