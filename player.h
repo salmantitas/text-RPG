@@ -19,7 +19,7 @@ class Player
         double DEX; // determines the likelihood of dealing damage
         double INT; // determines the likelihood of spells working
         double WIS; // determines the effectiveness of spells
-        int karma = 100;
+        int karma;
 
     public:
         Player() : name(""), maxHP(-1), HP(-1), playerClass("") {}

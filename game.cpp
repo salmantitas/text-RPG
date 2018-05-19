@@ -108,18 +108,40 @@ Choice game::warriorFightPath()
 
     vector<string> tortureBanditStr;
     tortureBanditStr.push_back("You torture the bandit. After a certain point, he breaks and tells you the whereabouts of their last hideout.");
-    tortureBanditStr.push_back(unfinished);
+    tortureBanditStr.push_back("You decide it's time to take the fight to them.");
+    tortureBanditStr.push_back("[1] Attack alone.");
+    tortureBanditStr.push_back("[2] Attempt to raise an army for the attack.");
     Choice tortureBandit(tortureBanditStr);
-    tortureBandit.choices.push_back(fin);
-    tortureBandit.consequences.push_back(KARMA_DROP);
 
     vector<string> dealBanditStr;
-    dealBanditStr.push_back("You offer deal. He happy.");
-    dealBanditStr.push_back(unfinished);
+    dealBanditStr.push_back("You offer the bandit a deal. That his past transgressions will be forgiven and will be offered a piece of land.");
+    dealBanditStr.push_back("The offer pleases him. Overjoyed, he gives up the location of his past compatriots.");
+    dealBanditStr.push_back("[1] Attack alone.");
+    dealBanditStr.push_back("[2] Raise an army.");
     Choice dealBandit(dealBanditStr);
-    dealBandit.choices.push_back(fin);
+
+    vector<string> attackAloneStr;
+    attackAloneStr.push_back("You attack alone.");
+    attackAloneStr.push_back(unfinished);
+    Choice attackAlone(attackAloneStr);
+    attackAlone.choices.push_back(fin);
+
+    vector<string> raiseArmyStr;
+    raiseArmyStr.push_back("You raise an army.");
+    raiseArmyStr.push_back(unfinished);
+    Choice raiseArmy(raiseArmyStr);
+    raiseArmy.choices.push_back(fin);
+
+
+    dealBandit.choices.push_back(attackAlone);
+    dealBandit.choices.push_back(raiseArmy);
     dealBandit.consequences.push_back(KARMA_BOOST);
     dealBandit.consequences.push_back(WIS_BOOST);
+
+    tortureBandit.choices.push_back(attackAlone);
+    tortureBandit.choices.push_back(raiseArmy);
+    tortureBandit.consequences.push_back(KARMA_DROP);
+    tortureBandit.consequences.push_back(STR_BOOST);
 
     questionBandit.choices.push_back(tortureBandit);
     questionBandit.choices.push_back(dealBandit);

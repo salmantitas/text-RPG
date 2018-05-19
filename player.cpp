@@ -97,10 +97,11 @@ void Player::setClass(string inputClass)
         HP = 100; maxHP = 100;
         STR = 0.3;
         DEF = 0.3;
-        AGL = 0.1;
+        AGL = 0.2;
         DEX = 0.2;
         INT = 0.3;
         WIS = 0.2;
+        karma = 80;
     }
     if (inputClass == "2")
     {
@@ -110,17 +111,19 @@ void Player::setClass(string inputClass)
         AGL = 0.3;
         DEX = 0.3;
         INT = 0.2;
-        WIS = 0.1;
+        WIS = 0.2;
+        karma = 20;
     }
     if (inputClass == "3")
     {
         HP = 50; maxHP = 50;
-        STR = 0.1;
-        DEF = 0.1;
-        AGL = 0.1;
-        DEX = 0.1;
-        INT = 0.5;
-        WIS = 0.5;
+        STR = 0.2;
+        DEF = 0.2;
+        AGL = 0.2;
+        DEX = 0.2;
+        INT = 0.4;
+        WIS = 0.4;
+        karma = 50;
     }
     playerClass = inputClass;
 }
