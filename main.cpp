@@ -15,7 +15,10 @@ int main()
 
     // Cheat codes for skipping character creation
     cout << "Input any key to begin the game" << endl;
+    cout << "At any poing, in game, you may press [Q] to quit." << endl;
     string input = formatInput();
+    if (input == "Q")
+        quit();
     if (input == "PLW")
         goto PLW;
     if (input == "PLR")

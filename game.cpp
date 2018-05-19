@@ -261,17 +261,26 @@ void game::playConsequences()
     }
 }
 
-/*
-fnL(int a, int b)
+
+void game::condConsHelper(int att, int check, int cond, int i, string txt)
 {
-    if (a < b)
+    if (cond < 0)
+    {
+        if (att < check)
         {
-            current = &current->conditionalChoices[get<2>(i)];
-            cout << "You were too weak." << endl;
-            playChoices();
+            cout << "Your " << txt << " was too low." << endl;
         }
+    }
+    else
+    {
+        if (att > check)
+        {
+            cout << "Your " << txt << " was enough." << endl;
+        }
+    }
+
 }
-*/
+
 
 // if condition is true, change current to something
 void game::playCondConsequences()
@@ -285,32 +294,96 @@ void game::playCondConsequences()
             case STR_DROP:
                 if (thyself->getSTR() < get<1>(i))
                 {
-                    current = &current->conditionalChoices[get<2>(i)];
                     cout << "Your strength was too low." << endl;
+                    current = &current->conditionalChoices[get<2>(i)];
                     playChoices();
                 }
                     break;
-            case STR_INC:
+            case STR_BOOST:
                 if (thyself->getSTR() > get<1>(i))
                 {
-                    current = &current->conditionalChoices[get<2>(i)];
                     cout << "You were strong enough." << endl;
+                    current = &current->conditionalChoices[get<2>(i)];
                     playChoices();
                 }
                     break;
             case DEF_DROP:
                 if (thyself->getDEF() < get<1>(i))
                 {
-                    current = &current->conditionalChoices[get<2>(i)];
                     cout << "Your defense was too low." << endl;
+                    current = &current->conditionalChoices[get<2>(i)];
                     playChoices();
                 }
                     break;
             case DEF_BOOST:
                 if (thyself->getDEF() > get<1>(i))
                 {
-                    current = &current->conditionalChoices[get<2>(i)];
                     cout << "Your defense was good enough." << endl;
+                    current = &current->conditionalChoices[get<2>(i)];
+                    playChoices();
+                }
+                    break;
+            case AGL_DROP:
+                if (thyself->getAGL() < get<1>(i))
+                {
+                    cout << "Your agility was too low." << endl;
+                    current = &current->conditionalChoices[get<2>(i)];
+                    playChoices();
+                }
+                    break;
+            case AGL_BOOST:
+                if (thyself->getAGL() > get<1>(i))
+                {
+                    cout << "Your agility was good enough." << endl;
+                    current = &current->conditionalChoices[get<2>(i)];
+                    playChoices();
+                }
+                    break;
+            case DEX_DROP:
+                if (thyself->getDEX() < get<1>(i))
+                {
+                    cout << "Your dexterity was too low." << endl;
+                    current = &current->conditionalChoices[get<2>(i)];
+                    playChoices();
+                }
+                    break;
+            case DEX_BOOST:
+                if (thyself->getDEX() > get<1>(i))
+                {
+                    cout << "Your dexterity was good enough." << endl;
+                    current = &current->conditionalChoices[get<2>(i)];
+                    playChoices();
+                }
+                    break;
+            case INT_DROP:
+                if (thyself->getINT() < get<1>(i))
+                {
+                    cout << "Your intelligence was too low." << endl;
+                    current = &current->conditionalChoices[get<2>(i)];
+                    playChoices();
+                }
+                    break;
+            case INT_BOOST:
+                if (thyself->getINT() > get<1>(i))
+                {
+                    cout << "Your intelligence was good enough." << endl;
+                    current = &current->conditionalChoices[get<2>(i)];
+                    playChoices();
+                }
+                    break;
+            case WIS_DROP:
+                if (thyself->getWIS() < get<1>(i))
+                {
+                    cout << "Your wisdom was too low." << endl;
+                    current = &current->conditionalChoices[get<2>(i)];
+                    playChoices();
+                }
+                    break;
+            case WIS_BOOST:
+                if (thyself->getWIS() > get<1>(i))
+                {
+                    cout << "Your wisdom was good enough." << endl;
+                    current = &current->conditionalChoices[get<2>(i)];
                     playChoices();
                 }
                     break;
