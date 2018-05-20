@@ -132,14 +132,19 @@ void Player::showStatus(){
    cout << "You are " << name << endl;
    cout << "Your HP is " << HP << "/" << maxHP << endl;
    cout << "You have chosen class " << getClassName() << endl;
-   cout << "Attributes" << endl;
-   cout << "Strength:     " << STR << endl;
-   cout << "Defense:      " << DEF << endl;
-   cout << "Agility:      " << AGL << endl;
-   cout << "Dexterity:    " << DEX << endl;
-   cout << "Intelligence: " << INT << endl;
-   cout << "Wisdom:       " << WIS << endl;
-   cout << "Your karma is " << showKarma() << ": " << karma << endl;
+   printSpace();
+   printLine();
+   cout << "| Attributes             |" << endl;
+   printLine();
+   printStat("| Strength:     ", STR);
+   printStat("| Defense:      ", DEF);
+   printStat("| Agility:      ", AGL);
+   printStat("| Dexterity:    ", DEX);
+   printStat("| Intelligence: ", INT);
+   printStat("| Wisdom:       ", WIS);
+   cout << "| Your karma is " << showKarma() << ": " << karma << " |" << endl;
+   printLine();
+   printSpace();
 }
 
 string Player::showKarma()

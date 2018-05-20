@@ -47,3 +47,9 @@ void Choice::readChoice()
     for (string s: problems)
         cout << s << endl;
 }
+
+Choice* Choice::choiceAt(int num)
+{
+    Choice* ptr = &choices[num];
+    return ptr;
+}

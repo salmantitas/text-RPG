@@ -22,3 +22,17 @@ void quitCheck(string input)
         quit();
 }
 
+void printSpace()
+{
+    cout << endl;
+}
+
+void printStat(string txt, double num)
+{
+    cout << txt << num << "      |" << endl;
+}
+
+void printLine()
+{
+    cout << "--------------------------" << endl;
+}

@@ -31,6 +31,8 @@ public:
     int numberOfChoices();
 
     void readChoice();
+
+    Choice* choiceAt(int num);
 };
 
 #endif // CHOICE_H

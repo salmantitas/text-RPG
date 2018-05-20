@@ -2,6 +2,8 @@
 #define PLAYER_H
 
 #include <iostream>
+#include "utils.h"
+
 using namespace std;
 
 // The player class containing player's name, class and attributes.

@@ -200,11 +200,6 @@ Choice game::mageStoryline()
     return rogueStoryline(); // stub
 }
 
-void game::setCurrent(Choice &choice)
-{
-    current = &choice;
-}
-
 void game::playChoices()
 {
     // Base Case
@@ -415,7 +410,11 @@ void game::condConsHelper(double att, double check, int cond, string txt, bool &
             jump = true;
         }
     }
+}
 
+void game::setCurrent(Choice &choice)
+{
+    current = &choice;
 }
 
 // Consequences
