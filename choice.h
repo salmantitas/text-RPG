@@ -15,7 +15,7 @@ public:
     std::vector<int> consequences;
     std::vector<std::tuple<int, double, int>> conditionalConsequences;
 
-    Choice() {};//: choices(NULL), problems(NULL) {};
+    Choice();
     Choice(std::vector<std::string> problems);
 
     void addText(std::string str);

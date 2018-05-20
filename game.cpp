@@ -4,8 +4,9 @@ using namespace std;
 
 string unfinished = "Unfinished storyline. Press [1] to end game.";
 Choice fin;
+vector<string> emptyVtr;
 
-game::game(Player player)
+game::game(Player &player)
 {
     thyself = &player;
     runGame();
@@ -54,8 +55,7 @@ void game::createChoices()
 
 Choice game::warriorStoryline()
 {
-    vector<string> rootStr;
-    Choice root(rootStr);
+    Choice root(emptyVtr);
     root.addText("Ever since you were a child, you have aspired to be a warrior.");
     root.addText("You've seen how great warriors are respected and you have trained from a tender age to be just like them.");
     root.addText("And then one day, your village is attacked by bandits.");
@@ -74,8 +74,7 @@ Choice game::warriorStoryline()
 
 Choice game::warriorFightPath()
 {
-    vector<string> defendVillageStr;
-    Choice defendVillage(defendVillageStr);
+    Choice defendVillage(emptyVtr);
     defendVillage.addText("You decide to stay and fight, for honour and for glory.");
     defendVillage.addText("Should you prevail, you will have saved everyone you know and cared for.");
     defendVillage.addText("And should you fail, you know you will have died for a good cause.");
@@ -90,48 +89,43 @@ Choice game::warriorFightPath()
     defendVillage.addConsequence(STR_BOOST);
     defendVillage.addConsequence(KARMA_BOOST);
 
-    vector<string> killBanditStr;
-    Choice killBandit(killBanditStr);
+    Choice killBandit(emptyVtr);
     killBandit.addText("You decide that because of the crime commited against your people, this bandit has no right to live.");
     killBandit.addText(unfinished);
     killBandit.addChoice(fin);
     killBandit.addConsequence(INT_DROP);
 
-    vector<string> questionBanditStr;
-    Choice questionBandit(questionBanditStr);
+    Choice questionBandit(emptyVtr);
     questionBandit.addText("You ask the bandit about the whereabouts of his fellow criminals. However, the bandit remains silent.");
     questionBandit.addText("You consider your options. You could torture the bandit until he speaks. Or you could offer him a better deal.");
     questionBandit.addText("[1] Torture.");
     questionBandit.addText("[2] Deal.");
 
-    vector<string> tortureBanditStr;
-    Choice tortureBandit(tortureBanditStr);
+    Choice tortureBandit(emptyVtr);
     tortureBandit.addText("You torture the bandit. After a certain point, he breaks and tells you the whereabouts of their last hideout.");
     tortureBandit.addText("You decide it's time to take the fight to them.");
     tortureBandit.addText("[1] Attack alone.");
     tortureBandit.addText("[2] Attempt to raise an army for the attack.");
 
-    vector<string> dealBanditStr;
-    Choice dealBandit(dealBanditStr);
+    Choice dealBandit(emptyVtr);
     dealBandit.addText("You offer the bandit a deal. That his past transgressions will be forgiven and will be offered a piece of land.");
     dealBandit.addText("The offer pleases him. Overjoyed, he gives up the location of his past compatriots.");
     dealBandit.addText("[1] Attack alone.");
     dealBandit.addText("[2] Raise an army.");
 
-    vector<string> attackAloneStr;
-    Choice attackAlone(attackAloneStr);
+    Choice attackAlone(emptyVtr);
     attackAlone.addText("You make your way to the bandit's hideout and attack alone.");
+    attackAlone.addText("You emerge victorious as you slaughter every last one of them.");
     attackAlone.addText(unfinished);
+    attackAlone.addConsequence(STR_BOOST);
     attackAlone.addChoice(fin);
 
-    vector<string> banditDeathStr;
-    Choice banditDeath(banditDeathStr);
+    Choice banditDeath(emptyVtr);
     banditDeath.addText("The bandits overpower you and kill you.");
     attackAlone.addCondCons(STR_DROP, 0.5, 0);
     attackAlone.addCondChoice(banditDeath);
 
-    vector<string> raiseArmyStr;
-    Choice raiseArmy(raiseArmyStr);
+    Choice raiseArmy(emptyVtr);
     raiseArmy.addText("You raise an army consisting of the able-bodied men and women from the village.");
     raiseArmy.addText("The might of your attack takes the wounded and injured bandits by surprise.");
     raiseArmy.addText(unfinished);
@@ -160,8 +154,7 @@ Choice game::warriorFightPath()
 
 Choice game::warriorRunPath()
 {
-    vector<string> abandonVillageStr;
-    Choice abandonVillage(abandonVillageStr);
+    Choice abandonVillage(emptyVtr);
     abandonVillage.addText("You grab your belongings and run.");
     abandonVillage.addText("The screams of those being butchered fill the air, but you keep running.");
     abandonVillage.addText("You keep running until you are sure that you are safe.");
@@ -170,21 +163,21 @@ Choice game::warriorRunPath()
     abandonVillage.addText("[2] Sleep in the forest.");
     abandonVillage.addConsequence(KARMA_DROP);
 
-    vector<string> sleepRoadStr;
-    Choice sleepRoad(sleepRoadStr);
+    Choice sleepRoad(emptyVtr);
     sleepRoad.addText("You spend the night beside the road.");
     sleepRoad.addText(unfinished);
     sleepRoad.addChoice(fin);
 
-    vector<string> sleepForestStr;
-    Choice sleepForest(sleepForestStr);
+    Choice sleepForest(emptyVtr);
     sleepForest.addText("You are sleeping on the forest floor.");
     sleepForest.addText(unfinished);
     sleepForest.addChoice(fin);
 
-    vector<string> wolfDeathStr;
-    Choice wolfDeath(wolfDeathStr);
-    wolfDeath.addText("Wolves eat you.");
+    Choice wolfDeath(emptyVtr);
+    wolfDeath.addText("While you slept defenseless and weak, wolves descend upon you.");
+    wolfDeath.addText("You scream as they take you by surprise. Your attempts so defend yourself are in vain.");
+    wolfDeath.addText("In the end, you feel life ebb away and welcome death.");
+    wolfDeath.addText("It seems as if that would be better than the pain.");
 
     sleepForest.addCondCons(STR_DROP, 0.5, 0);
     sleepForest.addCondChoice(wolfDeath);
@@ -205,6 +198,11 @@ Choice game::rogueStoryline()
 Choice game::mageStoryline()
 {
     return rogueStoryline(); // stub
+}
+
+void game::setCurrent(Choice &choice)
+{
+    current = &choice;
 }
 
 void game::playChoices()
@@ -260,7 +258,7 @@ void game::playChoices()
         }
         else
         {
-            current = &current->choices[intIn-1];
+            setCurrent(current->choices[intIn-1]);
             cout << endl;
             playChoices();
         }
@@ -333,26 +331,7 @@ void game::playConsequences()
 }
 
 
-void game::condConsHelper(double att, double check, int cond, string txt, bool &jump)
-{
-    if (cond < 0)
-    {
-        if (att < check)
-        {
-            cout << "Your " << txt << " was too low." << endl;
-            jump = true;
-        }
-    }
-    else
-    {
-        if (att > check)
-        {
-            cout << "Your " << txt << " was enough." << endl;
-            jump = true;
-        }
-    }
 
-}
 
 
 // if condition is true, change current to something
@@ -410,12 +389,33 @@ void game::playCondConsequences()
             CONSEQUENCE:
                 if (jump)
                 {
-                    current = &current->conditionalChoices[get<2>(i)];
+                    setCurrent(current->conditionalChoices[get<2>(i)]);
                     playChoices();
                 }
             }
         }
     }
+}
+
+void game::condConsHelper(double att, double check, int cond, string txt, bool &jump)
+{
+    if (cond < 0)
+    {
+        if (att < check)
+        {
+            cout << "Your " << txt << " was too low." << endl;
+            jump = true;
+        }
+    }
+    else
+    {
+        if (att > check)
+        {
+            cout << "Your " << txt << " was enough." << endl;
+            jump = true;
+        }
+    }
+
 }
 
 // Consequences

@@ -80,10 +80,12 @@ private:
 
     void condConsHelper(double att, double check, int cond, std::string txt, bool &jump);
 
+    void setCurrent(Choice &choice);
+
 public:
     Player *thyself; // For comic purposes
 
-    game(Player player);
+    game(Player &player);
 
     void runGame();
 

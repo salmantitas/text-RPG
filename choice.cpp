@@ -2,13 +2,19 @@
 
 using namespace std;
 
+
+Choice::Choice()
+{
+//
+}
+
 Choice::Choice(vector<string> problems) {
     this->problems = problems;
 }
 
 void Choice::addText(string str)
 {
-    problems.push_back(str);
+    this->problems.push_back(str);
 }
 
 void Choice::addChoice(Choice choice)
