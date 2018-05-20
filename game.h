@@ -78,7 +78,7 @@ private:
 
     void karmaDrop();
 
-    void condConsHelper(double att, double check, int cond, std::string txt);
+    void condConsHelper(double att, double check, int cond, std::string txt, bool &jump);
 
 public:
     Player *thyself; // For comic purposes
@@ -90,8 +90,6 @@ public:
     void createChoices();
 
     void playChoices();
-
-    void readChoice();
 
     void playConsequences();
 
