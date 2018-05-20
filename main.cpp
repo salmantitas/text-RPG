@@ -17,8 +17,7 @@ int main()
     cout << "Input any key to begin the game" << endl;
     cout << "At any poing, in game, you may press [Q] to quit." << endl;
     string input = formatInput();
-    if (input == "Q")
-        quit();
+    quitCheck(input);
     if (input == "PLW")
         goto PLW;
     if (input == "PLR")

@@ -16,3 +16,9 @@ void quit()
     exit(EXIT_SUCCESS);
 }
 
+void quitCheck(string input)
+{
+    if (input == "Q")
+        quit();
+}
+

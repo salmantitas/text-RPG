@@ -31,6 +31,11 @@ void Choice::addCondChoice(Choice choice)
     conditionalChoices.push_back(choice);
 }
 
+int Choice::numberOfChoices()
+{
+    return choices.size();
+}
+
 void Choice::readChoice()
 {
     for (string s: problems)

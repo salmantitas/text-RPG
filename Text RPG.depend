@@ -56,19 +56,19 @@
 1526765994 d:\text-rpg\player.h
 	<iostream>
 
-1522576851 d:\text-rpg\utils.h
+1526780602 d:\text-rpg\utils.h
 	<iostream>
 	<algorithm>
 
-1526780155 source:d:\text-rpg\choice.cpp
+1526780982 source:d:\text-rpg\choice.cpp
 	"choice.h"
 
-1526780134 d:\text-rpg\choice.h
+1526781237 d:\text-rpg\choice.h
 	<iostream>
 	<vector>
 	<tuple>
 
-1526632994 source:d:\text-rpg\main.cpp
+1526780653 source:d:\text-rpg\main.cpp
 	<iostream>
 	"charCreate.h"
 	"player.h"
@@ -85,9 +85,9 @@
 1526766039 source:d:\text-rpg\player.cpp
 	"player.h"
 
-1525897220 source:d:\text-rpg\utils.cpp
+1526780627 source:d:\text-rpg\utils.cpp
 	"utils.h"
 
-1526780262 source:d:\text-rpg\game.cpp
+1526781338 source:d:\text-rpg\game.cpp
 	"game.h"
 

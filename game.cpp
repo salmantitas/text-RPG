@@ -21,12 +21,9 @@ void game::runGame()
     cout << "Press button to continue" << endl;
     input = formatInput();
 
-    if (input == "Q")
-    {
-        quit();
-    }
+    quitCheck(input);
 
-    else if (input == "S")
+    if (input == "S")
     {
         thyself->showStatus();
         goto TOP;
@@ -138,8 +135,8 @@ Choice game::warriorFightPath()
     raiseArmy.addText("You raise an army consisting of the able-bodied men and women from the village.");
     raiseArmy.addText("The might of your attack takes the wounded and injured bandits by surprise.");
     raiseArmy.addText(unfinished);
-    raiseArmy.choices.push_back(fin);
-    raiseArmy.addCondCons(KARMA_DROP, 80, 0);
+    raiseArmy.addChoice(fin);
+    raiseArmy.addCondCons(KARMA_DROP, 90, 0);
     raiseArmy.addCondChoice(attackAlone);
 
     dealBandit.addChoice(attackAlone);
@@ -213,7 +210,7 @@ Choice game::mageStoryline()
 void game::playChoices()
 {
     // Base Case
-    if (current->choices.size() == 0)
+    if (current->numberOfChoices() == 0)
         {
             current->readChoice();
             cout << "End of the line." << endl;
@@ -227,8 +224,8 @@ void game::playChoices()
 //        gameOver = true;
     else
     {
-        current->readChoice();
         playCondConsequences();
+        current->readChoice();
         playConsequences();
         goto NEXT;
         TOP:
@@ -236,8 +233,7 @@ void game::playChoices()
         NEXT:
             string input;
             input = formatInput();
-            if (input == "Q")
-                quit();
+            quitCheck(input);
             if (input == "S")
             {
                 thyself->showStatus();
@@ -256,7 +252,7 @@ void game::playChoices()
             goto TOP;
         }
 
-        if (intIn == 0 || intIn > current->choices.size())
+        if (intIn == 0 || intIn > current->numberOfChoices())
         {
             cout << "Invalid Input. Please try again" << endl;
             cout << endl;

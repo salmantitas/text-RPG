@@ -28,11 +28,9 @@ public:
 
     void addCondChoice(Choice choice);
 
+    int numberOfChoices();
+
     void readChoice();
-
-    // Consequence Functions
-
-//    Choice(std::string problem);
 };
 
 #endif // CHOICE_H

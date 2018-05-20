@@ -7,4 +7,6 @@ std::string formatInput();
 
 void quit();
 
+void quitCheck(std::string input);
+
 #endif // UTILS_H
