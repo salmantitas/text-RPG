@@ -76,14 +76,14 @@
 	"utils.h"
 	"game.h"
 
-1526816368 d:\text-rpg\game.h
+1526817827 d:\text-rpg\game.h
 	<iostream>
 	<math.h>
 	"player.h"
 	"utils.h"
 	"choice.h"
 
-1526817306 source:d:\text-rpg\player.cpp
+1526817690 source:d:\text-rpg\player.cpp
 	"player.h"
 
 1526817533 source:d:\text-rpg\utils.cpp

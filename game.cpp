@@ -87,13 +87,21 @@ Choice game::warriorFightPath()
     defendVillage.addText("Press [1] to kill the bandit.");
     defendVillage.addText("Press [2] to question the bandit.");
     defendVillage.addConsequence(STR_BOOST);
+    defendVillage.addConsequence(DEF_BOOST);
+    defendVillage.addConsequence(AGL_BOOST);
     defendVillage.addConsequence(KARMA_BOOST);
 
     Choice killBandit(emptyVtr);
     killBandit.addText("You decide that because of the crime commited against your people, this bandit has no right to live.");
+    killBandit.addText("Your decision angers the entire village.");
+    killBandit.addText("People start panicking as they realize that you destroyed their only source of information.");
+    killBandit.addText("You realize that you will be attacked soon.");
+    killBandit.addText("[1] Run before you are attacked.");
+    killBandit.addText("[2] Draw your sword in warning.");
+    killBandit.addText("[3] Kill anyone who stands before you.");
     killBandit.addText(unfinished);
     killBandit.addChoice(fin);
-    killBandit.addConsequence(INT_DROP);
+    killBandit.addConsequence(WIS_DROP);
 
     Choice questionBandit(emptyVtr);
     questionBandit.addText("You ask the bandit about the whereabouts of his fellow criminals. However, the bandit remains silent.");
@@ -106,19 +114,28 @@ Choice game::warriorFightPath()
     tortureBandit.addText("You decide it's time to take the fight to them.");
     tortureBandit.addText("[1] Attack alone.");
     tortureBandit.addText("[2] Attempt to raise an army for the attack.");
+    tortureBandit.addConsequence(KARMA_DROP);
+    tortureBandit.addConsequence(STR_BOOST);
+    tortureBandit.addConsequence(WIS_BOOST);
 
     Choice dealBandit(emptyVtr);
     dealBandit.addText("You offer the bandit a deal. That his past transgressions will be forgiven and will be offered a piece of land.");
     dealBandit.addText("The offer pleases him. Overjoyed, he gives up the location of his past compatriots.");
     dealBandit.addText("[1] Attack alone.");
     dealBandit.addText("[2] Raise an army.");
+    dealBandit.addConsequence(KARMA_BOOST);
+    dealBandit.addConsequence(INT_BOOST);
+    dealBandit.addConsequence(WIS_BOOST);
 
     Choice attackAlone(emptyVtr);
     attackAlone.addText("You make your way to the bandit's hideout and attack alone.");
     attackAlone.addText("You emerge victorious as you slaughter every last one of them.");
-    attackAlone.addText(unfinished);
+    attackAlone.addText("After the fight, as the battle lust ebbs away, you realize you are a force to be reckoned with.");
+    attackAlone.addText("You could return to your village or you could move forward, see what fate has in store.");
+    attackAlone.addText("[1] Return to the village.");
+    attackAlone.addText("[2] Head out for adventure.");
     attackAlone.addConsequence(STR_BOOST);
-    attackAlone.addChoice(fin);
+    attackAlone.addConsequence(AGL_BOOST);
 
     Choice banditDeath(emptyVtr);
     banditDeath.addText("The bandits overpower you and kill you.");
@@ -128,20 +145,42 @@ Choice game::warriorFightPath()
     Choice raiseArmy(emptyVtr);
     raiseArmy.addText("You raise an army consisting of the able-bodied men and women from the village.");
     raiseArmy.addText("The might of your attack takes the wounded and injured bandits by surprise.");
-    raiseArmy.addText(unfinished);
-    raiseArmy.addChoice(fin);
+    raiseArmy.addText("Now that an enemy so close to home has been neutralized, you realize there are necessary things at hand.");
+    raiseArmy.addText("[1] Secure this outpost and fortify it to protect the village from future attacks.");
+    raiseArmy.addText("[2] Return to the village to recount the events.");
+    raiseArmy.addText("[3] Heed the call of the adventurer in you and head out on a journey.");
     raiseArmy.addCondCons(KARMA_DROP, 90, 0);
     raiseArmy.addCondChoice(attackAlone);
+    raiseArmy.addConsequence(STR_BOOST);
+    raiseArmy.addConsequence(DEF_BOOST);
+
+    Choice secureOutpost(emptyVtr);
+    secureOutpost.addText("You secure the outpost.");
+    secureOutpost.addText(unfinished);
+    secureOutpost.addChoice(fin);
+
+    Choice returnVillage(emptyVtr);
+    returnVillage.addText("You return to the village.");
+    returnVillage.addText(unfinished);
+    returnVillage.addChoice(fin);
+
+    Choice outAdventure(emptyVtr);
+    outAdventure.addText("You head out into the world for adventure.");
+    outAdventure.addText(unfinished);
+    outAdventure.addChoice(fin);
+
+    attackAlone.addChoice(returnVillage);
+    attackAlone.addChoice(outAdventure);
+
+    raiseArmy.addChoice(secureOutpost);
+    raiseArmy.addChoice(returnVillage);
+    raiseArmy.addChoice(outAdventure);
 
     dealBandit.addChoice(attackAlone);
     dealBandit.addChoice(raiseArmy);
-    dealBandit.addConsequence(KARMA_BOOST);
-    dealBandit.addConsequence(WIS_BOOST);
 
     tortureBandit.addChoice(attackAlone);
     tortureBandit.addChoice(raiseArmy);
-    tortureBandit.addConsequence(KARMA_DROP);
-    tortureBandit.addConsequence(STR_BOOST);
 
     questionBandit.addChoice(tortureBandit);
     questionBandit.addChoice(dealBandit);
