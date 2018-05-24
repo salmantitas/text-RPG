@@ -160,9 +160,39 @@ Choice game::warriorFightPath()
     secureOutpost.addChoice(fin);
 
     Choice returnVillage(emptyVtr);
-    returnVillage.addText("You return to the village.");
-    returnVillage.addText(unfinished);
-    returnVillage.addChoice(fin);
+    returnVillage.addText("You return to the village to deliver the news of the outpost.");
+    returnVillage.addText("Yet, it appears that not everything will pass as smoothly as you had expected.");
+    returnVillage.addText("The elders are not pleased with how the decisions were made without their presence.");
+    returnVillage.addText("For that matter, they've decided to blame you for defying their authority.");
+    returnVillage.addText("[1] Surrender to fate and await judgement.");
+    returnVillage.addText("[2] Challenge the authority of the council.");
+    returnVillage.addText("[3] Run away before they have a chance of confronting you.");
+    returnVillage.addText("[4] Kill all the elders.");
+
+    Choice surrenderVillage(emptyVtr);
+    surrenderVillage.addText("You've surrendered to the village elders.");
+    surrenderVillage.addText(unfinished);
+    surrenderVillage.addChoice(fin);
+
+    Choice challengeElders(emptyVtr);
+    challengeElders.addText("You have challenged the authority of the elders.");
+    challengeElders.addText(unfinished);
+    challengeElders.addChoice(fin);
+
+    Choice runAway(emptyVtr);
+    runAway.addText("You run away!");
+    runAway.addText(unfinished);
+    runAway.addChoice(fin);
+
+    Choice killElders(emptyVtr);
+    killElders.addText("You kill the elders.");
+    killElders.addText(unfinished);
+    killElders.addChoice(fin);
+
+    returnVillage.addChoice(surrenderVillage);
+    returnVillage.addChoice(challengeElders);
+    returnVillage.addChoice(runAway);
+    returnVillage.addChoice(killElders);
 
     Choice outAdventure(emptyVtr);
     outAdventure.addText("You head out into the world for adventure.");
@@ -245,9 +275,9 @@ void game::playChoices()
     if (current->numberOfChoices() == 0)
         {
             current->readChoice();
-            cout << "End of the line." << endl;
-            string input;
-            input = formatInput();
+            //cout << "End of the line." << endl;
+            //string input;
+            //input = formatInput();
             quit();
         }
     // if list empty, read problem

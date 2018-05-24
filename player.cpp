@@ -142,7 +142,7 @@ void Player::showStatus(){
    printStat("| Dexterity:    ", DEX);
    printStat("| Intelligence: ", INT);
    printStat("| Wisdom:       ", WIS);
-   cout << "| Your karma is " << showKarma() << ": " << karma << " |" << endl;
+   cout << "| Your karma is " << showKarma() << ": " << karma << "|" << endl;
    printLine();
    printSpace();
 }
