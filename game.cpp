@@ -12,6 +12,7 @@ game::game(Player &player)
     runGame();
 }
 
+// Creates the choices and initiates the game
 void game::runGame()
 {
     fin = endChoice();
@@ -35,6 +36,7 @@ void game::runGame()
     quit();
 }
 
+// Creates appropriate storyline based on the player's class
 void game::createChoices()
 {
     int plc = stoi(thyself->getClass(), nullptr, 10);
@@ -53,6 +55,7 @@ void game::createChoices()
     current = &choiceTree;
 }
 
+// Warrior Storyline
 Choice game::warriorStoryline()
 {
     Choice root(emptyVtr);
@@ -72,6 +75,7 @@ Choice game::warriorStoryline()
     return root;
 }
 
+// Warrior Path 1: Defend The Village
 Choice game::warriorFightPath()
 {
     Choice defendVillage(emptyVtr);
@@ -99,9 +103,36 @@ Choice game::warriorFightPath()
     killBandit.addText("[1] Run before you are attacked.");
     killBandit.addText("[2] Draw your sword in warning.");
     killBandit.addText("[3] Kill anyone who stands before you.");
-    killBandit.addText(unfinished);
-    killBandit.addChoice(fin);
     killBandit.addConsequence(WIS_DROP);
+
+    Choice relayRunVillage(emptyVtr);
+    relayRunVillage.addText("You tell yourself that it's not worth getting into a fight.");
+    relayRunVillage.markRelay();
+    relayRunVillage.addConsequence(AGL_BOOST);
+
+    Choice drawSword(emptyVtr);
+    drawSword.addText("You draw your sword and stand menacingly, challenging any who would dare to attack you.");
+    drawSword.addText("After a moment, it becomes very clear that no one wants to make an enemy of you.");
+    drawSword.addText("[1] Leave the village.");
+    drawSword.addText("[2] Vent your rage and kill everyone around you.");
+    drawSword.addConsequence(INT_BOOST);
+    drawSword.addConsequence(DEF_BOOST);
+
+    Choice relayLeaveVillage(emptyVtr);
+    relayLeaveVillage.addText("You realize that a village where you aren't valued has no meaning to you. So you leave.");
+    relayLeaveVillage.markRelay();
+
+    Choice massacreVillage(emptyVtr);
+    massacreVillage.addText("Suddenly you charge yourself on the nearest person, stabbing your sword into him.");
+    massacreVillage.addText("Who he was does not really matter. What matters is that you were challenged.");
+    massacreVillage.addText("After the initial onslaught, it becomes clear there are only so many that you can kill.");
+    massacreVillage.addText("The villagers retaliate and you sustain an injury.");
+    massacreVillage.addText("[1] Continue fighting.");
+    massacreVillage.addText("[2] Run away from the village");
+    massacreVillage.addConsequence(STR_BOOST);
+    massacreVillage.addConsequence(KARMA_DROP);
+    massacreVillage.addConsequence(KARMA_DROP);
+    massacreVillage.addChoice(fin);
 
     Choice questionBandit(emptyVtr);
     questionBandit.addText("You ask the bandit about the whereabouts of his fellow criminals. However, the bandit remains silent.");
@@ -150,9 +181,13 @@ Choice game::warriorFightPath()
     raiseArmy.addText("[2] Return to the village to recount the events.");
     raiseArmy.addText("[3] Heed the call of the adventurer in you and head out on a journey.");
     raiseArmy.addCondCons(KARMA_DROP, 90, 0);
-    raiseArmy.addCondChoice(attackAlone);
     raiseArmy.addConsequence(STR_BOOST);
     raiseArmy.addConsequence(DEF_BOOST);
+
+    Choice relayAttackAlone(emptyVtr);
+    relayAttackAlone.addText("No one heeds your call to arms.");
+    relayAttackAlone.addText("Frustrated at their lack of faith, you decide to do the only thing that's left.");
+    relayAttackAlone.markRelay();
 
     Choice secureOutpost(emptyVtr);
     secureOutpost.addText("You secure the outpost.");
@@ -202,9 +237,23 @@ Choice game::warriorFightPath()
     attackAlone.addChoice(returnVillage);
     attackAlone.addChoice(outAdventure);
 
+    relayRunVillage.addChoice(outAdventure);
+
+    relayAttackAlone.addChoice(attackAlone);
+
+    relayLeaveVillage.addChoice(outAdventure);
+
+    drawSword.addChoice(relayLeaveVillage);
+    drawSword.addChoice(massacreVillage);
+
+    killBandit.addChoice(relayRunVillage);
+    killBandit.addChoice(drawSword);
+    killBandit.addChoice(massacreVillage);
+
     raiseArmy.addChoice(secureOutpost);
     raiseArmy.addChoice(returnVillage);
     raiseArmy.addChoice(outAdventure);
+    raiseArmy.addCondChoice(relayAttackAlone);
 
     dealBandit.addChoice(attackAlone);
     dealBandit.addChoice(raiseArmy);
@@ -221,6 +270,7 @@ Choice game::warriorFightPath()
     return defendVillage;
 }
 
+// Warrior Path 2: Run Away from the conflict
 Choice game::warriorRunPath()
 {
     Choice abandonVillage(emptyVtr);
@@ -271,19 +321,24 @@ Choice game::mageStoryline()
 
 void game::playChoices()
 {
-    // Base Case
+    // Base Case: Checks whether it's the end of the path/tree
     if (current->numberOfChoices() == 0)
         {
             current->readChoice();
-            //cout << "End of the line." << endl;
-            //string input;
-            //input = formatInput();
             quit();
         }
-    // if list empty, read problem
-    // else, read problem, take input and recurse
-//    if (current->choices.size == 0)
-//        gameOver = true;
+
+    // Case 1: If the Choice is a relay choice, read the text, apply consequences, change the pointer and self recurse to continue game
+    else if (current->getRelay())
+    {
+        current->readChoice();
+        playConsequences();
+        setCurrent(current->choices[0]);
+        playChoices();
+    }
+
+    // Case 3: Continue game. If there are any conditional consequences, play them. Else read the text, apply consequences and change
+    //         the pointer according to user input.
     else
     {
         playCondConsequences();
@@ -304,6 +359,7 @@ void game::playChoices()
 
         int intIn;
 
+        // If input is not a number, try again.
         try {
             intIn = stoi(input, nullptr, 10);
         }
@@ -314,12 +370,14 @@ void game::playChoices()
             goto TOP;
         }
 
+        // If input number is > 0 or < number of available choices, try again
         if (intIn == 0 || intIn > current->numberOfChoices())
         {
             cout << "Invalid Input. Please try again" << endl;
             cout << endl;
             goto TOP;
         }
+        // Case: Valid input
         else
         {
             setCurrent(current->choices[intIn-1]);
@@ -604,7 +662,7 @@ void game::WISBoost()
 
 void game::WISDrop()
 {
-    thyself->setWIS(consHelper(thyself->getWIS(), 1, "Wisdom"));
+    thyself->setWIS(consHelper(thyself->getWIS(), -1, "Wisdom"));
 }
 
 void game::karmaBoost()

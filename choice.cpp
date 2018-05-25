@@ -17,7 +17,7 @@ void Choice::addText(string str)
     this->problems.push_back(str);
 }
 
-void Choice::addChoice(Choice choice)
+void Choice::addChoice(Choice &choice)
 {
     choices.push_back(choice);
 }
@@ -32,7 +32,7 @@ void Choice::addCondCons(int a, double b, int c)
     conditionalConsequences.push_back(make_tuple(a,b,c));
 }
 
-void Choice::addCondChoice(Choice choice)
+void Choice::addCondChoice(Choice &choice)
 {
     conditionalChoices.push_back(choice);
 }
@@ -52,4 +52,14 @@ Choice* Choice::choiceAt(int num)
 {
     Choice* ptr = &choices[num];
     return ptr;
+}
+
+bool Choice::getRelay()
+{
+    return relay;
+}
+
+void Choice::markRelay()
+{
+    relay = true;
 }

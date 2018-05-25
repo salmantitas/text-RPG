@@ -6,7 +6,7 @@
 
 class Choice{
 private:
-    bool played = false;
+    bool relay = false;
     std::vector<std::string> problems;
 
 public:
@@ -20,19 +20,23 @@ public:
 
     void addText(std::string str);
 
-    void addChoice(Choice choice);
+    void addChoice(Choice &choice);
 
     void addConsequence(int num);
 
     void addCondCons(int a, double b, int c);
 
-    void addCondChoice(Choice choice);
+    void addCondChoice(Choice &choice);
 
     int numberOfChoices();
 
     void readChoice();
 
     Choice* choiceAt(int num);
+
+    bool getRelay();
+
+    void markRelay();
 };
 
 #endif // CHOICE_H
