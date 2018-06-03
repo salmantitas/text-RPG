@@ -132,7 +132,12 @@ Choice game::warriorFightPath()
     massacreVillage.addConsequence(STR_BOOST);
     massacreVillage.addConsequence(KARMA_DROP);
     massacreVillage.addConsequence(KARMA_DROP);
-    massacreVillage.addChoice(fin);
+
+    Choice overpowered(emptyVtr);
+    overpowered.addText("You are overpowered by the villagers. There is no way you could taken them on.");
+    overpowered.addText("You are disarmed, and then killed.");
+
+    massacreVillage.addChoice(overpowered);
 
     Choice questionBandit(emptyVtr);
     questionBandit.addText("You ask the bandit about the whereabouts of his fellow criminals. However, the bandit remains silent.");
@@ -228,6 +233,8 @@ Choice game::warriorFightPath()
     returnVillage.addChoice(challengeElders);
     returnVillage.addChoice(runAway);
     returnVillage.addChoice(killElders);
+
+    massacreVillage.addChoice(runAway);
 
     Choice outAdventure(emptyVtr);
     outAdventure.addText("You head out into the world for adventure.");
