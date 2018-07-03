@@ -6,7 +6,7 @@
 
 class Choice{
 private:
-    bool relay = false;
+    bool relay;
     std::vector<std::string> problems;
 
 public:

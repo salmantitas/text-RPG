@@ -61,10 +61,10 @@
 	<iostream>
 	<algorithm>
 
-1527242851 source:d:\text-rpg\choice.cpp
+1530591505 source:d:\text-rpg\choice.cpp
 	"choice.h"
 
-1527242842 d:\text-rpg\choice.h
+1530591510 d:\text-rpg\choice.h
 	<iostream>
 	<vector>
 	<tuple>
@@ -89,6 +89,6 @@
 1526817533 source:d:\text-rpg\utils.cpp
 	"utils.h"
 
-1527247664 source:d:\text-rpg\game.cpp
+1530591418 source:d:\text-rpg\game.cpp
 	"game.h"
 

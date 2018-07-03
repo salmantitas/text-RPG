@@ -58,7 +58,7 @@ void game::createChoices()
 // Warrior Storyline
 Choice game::warriorStoryline()
 {
-    Choice root(emptyVtr);
+    Choice root;
     root.addText("Ever since you were a child, you have aspired to be a warrior.");
     root.addText("You've seen how great warriors are respected and you have trained from a tender age to be just like them.");
     root.addText("And then one day, your village is attacked by bandits.");
@@ -78,7 +78,7 @@ Choice game::warriorStoryline()
 // Warrior Path 1: Defend The Village
 Choice game::warriorFightPath()
 {
-    Choice defendVillage(emptyVtr);
+    Choice defendVillage;
     defendVillage.addText("You decide to stay and fight, for honour and for glory.");
     defendVillage.addText("Should you prevail, you will have saved everyone you know and cared for.");
     defendVillage.addText("And should you fail, you know you will have died for a good cause.");
@@ -95,7 +95,7 @@ Choice game::warriorFightPath()
     defendVillage.addConsequence(AGL_BOOST);
     defendVillage.addConsequence(KARMA_BOOST);
 
-    Choice killBandit(emptyVtr);
+    Choice killBandit;
     killBandit.addText("You decide that because of the crime commited against your people, this bandit has no right to live.");
     killBandit.addText("Your decision angers the entire village.");
     killBandit.addText("People start panicking as they realize that you destroyed their only source of information.");
@@ -105,12 +105,12 @@ Choice game::warriorFightPath()
     killBandit.addText("[3] Kill anyone who stands before you.");
     killBandit.addConsequence(WIS_DROP);
 
-    Choice relayRunVillage(emptyVtr);
+    Choice relayRunVillage;
     relayRunVillage.addText("You tell yourself that it's not worth getting into a fight.");
     relayRunVillage.markRelay();
     relayRunVillage.addConsequence(AGL_BOOST);
 
-    Choice drawSword(emptyVtr);
+    Choice drawSword;
     drawSword.addText("You draw your sword and stand menacingly, challenging any who would dare to attack you.");
     drawSword.addText("After a moment, it becomes very clear that no one wants to make an enemy of you.");
     drawSword.addText("[1] Leave the village.");
@@ -118,11 +118,11 @@ Choice game::warriorFightPath()
     drawSword.addConsequence(INT_BOOST);
     drawSword.addConsequence(DEF_BOOST);
 
-    Choice relayLeaveVillage(emptyVtr);
+    Choice relayLeaveVillage;
     relayLeaveVillage.addText("You realize that a village where you aren't valued has no meaning to you. So you leave.");
     relayLeaveVillage.markRelay();
 
-    Choice massacreVillage(emptyVtr);
+    Choice massacreVillage;
     massacreVillage.addText("Suddenly you charge yourself on the nearest person, stabbing your sword into him.");
     massacreVillage.addText("Who he was does not really matter. What matters is that you were challenged.");
     massacreVillage.addText("After the initial onslaught, it becomes clear there are only so many that you can kill.");
@@ -133,19 +133,19 @@ Choice game::warriorFightPath()
     massacreVillage.addConsequence(KARMA_DROP);
     massacreVillage.addConsequence(KARMA_DROP);
 
-    Choice overpowered(emptyVtr);
+    Choice overpowered;
     overpowered.addText("You are overpowered by the villagers. There is no way you could taken them on.");
     overpowered.addText("You are disarmed, and then killed.");
 
     massacreVillage.addChoice(overpowered);
 
-    Choice questionBandit(emptyVtr);
+    Choice questionBandit;
     questionBandit.addText("You ask the bandit about the whereabouts of his fellow criminals. However, the bandit remains silent.");
     questionBandit.addText("You consider your options. You could torture the bandit until he speaks. Or you could offer him a better deal.");
     questionBandit.addText("[1] Torture.");
     questionBandit.addText("[2] Deal.");
 
-    Choice tortureBandit(emptyVtr);
+    Choice tortureBandit;
     tortureBandit.addText("You torture the bandit. After a certain point, he breaks and tells you the whereabouts of their last hideout.");
     tortureBandit.addText("You decide it's time to take the fight to them.");
     tortureBandit.addText("[1] Attack alone.");
@@ -154,7 +154,7 @@ Choice game::warriorFightPath()
     tortureBandit.addConsequence(STR_BOOST);
     tortureBandit.addConsequence(WIS_BOOST);
 
-    Choice dealBandit(emptyVtr);
+    Choice dealBandit;
     dealBandit.addText("You offer the bandit a deal. That his past transgressions will be forgiven and will be offered a piece of land.");
     dealBandit.addText("The offer pleases him. Overjoyed, he gives up the location of his past compatriots.");
     dealBandit.addText("[1] Attack alone.");
@@ -163,7 +163,7 @@ Choice game::warriorFightPath()
     dealBandit.addConsequence(INT_BOOST);
     dealBandit.addConsequence(WIS_BOOST);
 
-    Choice attackAlone(emptyVtr);
+    Choice attackAlone;
     attackAlone.addText("You make your way to the bandit's hideout and attack alone.");
     attackAlone.addText("You emerge victorious as you slaughter every last one of them.");
     attackAlone.addText("After the fight, as the battle lust ebbs away, you realize you are a force to be reckoned with.");
@@ -173,12 +173,12 @@ Choice game::warriorFightPath()
     attackAlone.addConsequence(STR_BOOST);
     attackAlone.addConsequence(AGL_BOOST);
 
-    Choice banditDeath(emptyVtr);
+    Choice banditDeath;
     banditDeath.addText("The bandits overpower you and kill you.");
     attackAlone.addCondCons(STR_DROP, 0.5, 0);
     attackAlone.addCondChoice(banditDeath);
 
-    Choice raiseArmy(emptyVtr);
+    Choice raiseArmy;
     raiseArmy.addText("You raise an army consisting of the able-bodied men and women from the village.");
     raiseArmy.addText("The might of your attack takes the wounded and injured bandits by surprise.");
     raiseArmy.addText("Now that an enemy so close to home has been neutralized, you realize there are necessary things at hand.");
@@ -189,17 +189,17 @@ Choice game::warriorFightPath()
     raiseArmy.addConsequence(STR_BOOST);
     raiseArmy.addConsequence(DEF_BOOST);
 
-    Choice relayAttackAlone(emptyVtr);
+    Choice relayAttackAlone;
     relayAttackAlone.addText("No one heeds your call to arms.");
     relayAttackAlone.addText("Frustrated at their lack of faith, you decide to do the only thing that's left.");
     relayAttackAlone.markRelay();
 
-    Choice secureOutpost(emptyVtr);
+    Choice secureOutpost;
     secureOutpost.addText("You secure the outpost.");
     secureOutpost.addText(unfinished);
     secureOutpost.addChoice(fin);
 
-    Choice returnVillage(emptyVtr);
+    Choice returnVillage;
     returnVillage.addText("You return to the village to deliver the news of the outpost.");
     returnVillage.addText("Yet, it appears that not everything will pass as smoothly as you had expected.");
     returnVillage.addText("The elders are not pleased with how the decisions were made without their presence.");
@@ -209,22 +209,22 @@ Choice game::warriorFightPath()
     returnVillage.addText("[3] Run away before they have a chance of confronting you.");
     returnVillage.addText("[4] Kill all the elders.");
 
-    Choice surrenderVillage(emptyVtr);
+    Choice surrenderVillage;
     surrenderVillage.addText("You've surrendered to the village elders.");
     surrenderVillage.addText(unfinished);
     surrenderVillage.addChoice(fin);
 
-    Choice challengeElders(emptyVtr);
+    Choice challengeElders;
     challengeElders.addText("You have challenged the authority of the elders.");
     challengeElders.addText(unfinished);
     challengeElders.addChoice(fin);
 
-    Choice runAway(emptyVtr);
+    Choice runAway;
     runAway.addText("You run away!");
     runAway.addText(unfinished);
     runAway.addChoice(fin);
 
-    Choice killElders(emptyVtr);
+    Choice killElders;
     killElders.addText("You kill the elders.");
     killElders.addText(unfinished);
     killElders.addChoice(fin);
@@ -236,7 +236,7 @@ Choice game::warriorFightPath()
 
     massacreVillage.addChoice(runAway);
 
-    Choice outAdventure(emptyVtr);
+    Choice outAdventure;
     outAdventure.addText("You head out into the world for adventure.");
     outAdventure.addText(unfinished);
     outAdventure.addChoice(fin);
@@ -280,7 +280,7 @@ Choice game::warriorFightPath()
 // Warrior Path 2: Run Away from the conflict
 Choice game::warriorRunPath()
 {
-    Choice abandonVillage(emptyVtr);
+    Choice abandonVillage;
     abandonVillage.addText("You grab your belongings and run.");
     abandonVillage.addText("The screams of those being butchered fill the air, but you keep running.");
     abandonVillage.addText("You keep running until you are sure that you are safe.");
@@ -289,17 +289,17 @@ Choice game::warriorRunPath()
     abandonVillage.addText("[2] Sleep in the forest.");
     abandonVillage.addConsequence(KARMA_DROP);
 
-    Choice sleepRoad(emptyVtr);
+    Choice sleepRoad;
     sleepRoad.addText("You spend the night beside the road.");
     sleepRoad.addText(unfinished);
     sleepRoad.addChoice(fin);
 
-    Choice sleepForest(emptyVtr);
+    Choice sleepForest;
     sleepForest.addText("You are sleeping on the forest floor.");
     sleepForest.addText(unfinished);
     sleepForest.addChoice(fin);
 
-    Choice wolfDeath(emptyVtr);
+    Choice wolfDeath;
     wolfDeath.addText("While you slept defenseless and weak, wolves descend upon you.");
     wolfDeath.addText("You scream as they take you by surprise. Your attempts so defend yourself are in vain.");
     wolfDeath.addText("In the end, you feel life ebb away and welcome death.");
@@ -317,7 +317,7 @@ Choice game::rogueStoryline()
 {
     vector<string> rootStr;
     rootStr.push_back(unfinished);
-    Choice root(rootStr);
+    Choice root;
     return root;
 }
 

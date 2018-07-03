@@ -5,11 +5,7 @@ using namespace std;
 
 Choice::Choice()
 {
-//
-}
-
-Choice::Choice(vector<string> problems) {
-    this->problems = problems;
+    relay = false;
 }
 
 void Choice::addText(string str)
