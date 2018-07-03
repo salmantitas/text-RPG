@@ -38,6 +38,16 @@ int Choice::numberOfChoices()
     return choices.size();
 }
 
+int Choice::numberOfCons()
+{
+    return consequences.size();
+}
+
+int Choice::numberOfCondCons()
+{
+    return conditionalConsequences.size();
+}
+
 void Choice::readChoice()
 {
     for (string s: problems)
@@ -46,8 +56,22 @@ void Choice::readChoice()
 
 Choice* Choice::choiceAt(int num)
 {
-    Choice* ptr = &choices[num];
-    return ptr;
+    return &choices[num];
+}
+
+Choice* Choice::choiceAtCond(int num)
+{
+    return &conditionalChoices[num];
+}
+
+vector<int> Choice::getCons()
+{
+    return consequences;
+}
+
+vector<tuple<int, double, int>> Choice::getCondCons()
+{
+    return conditionalConsequences;
 }
 
 bool Choice::getRelay()

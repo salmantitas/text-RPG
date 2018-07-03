@@ -82,6 +82,8 @@ private:
 
     void setCurrent(Choice &choice);
 
+    void setCurrent(Choice* choice);
+
 public:
     Player *thyself; // For comic purposes
 

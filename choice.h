@@ -8,15 +8,16 @@ class Choice{
 private:
     bool relay;
     std::vector<std::string> problems;
-
-public:
     std::vector<Choice> choices;
     std::vector<Choice> conditionalChoices;
     std::vector<int> consequences;
     std::vector<std::tuple<int, double, int>> conditionalConsequences;
 
+public:
+
+
+
     Choice();
-    Choice(std::vector<std::string> problems);
 
     void addText(std::string str);
 
@@ -30,9 +31,19 @@ public:
 
     int numberOfChoices();
 
+    int numberOfCons();
+
+    int numberOfCondCons();
+
     void readChoice();
 
     Choice* choiceAt(int num);
+
+    Choice* choiceAtCond(int num);
+
+    std::vector<int> getCons();
+
+    std::vector<std::tuple<int, double, int>> getCondCons();
 
     bool getRelay();
 

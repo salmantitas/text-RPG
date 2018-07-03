@@ -315,9 +315,8 @@ Choice game::warriorRunPath()
 
 Choice game::rogueStoryline()
 {
-    vector<string> rootStr;
-    rootStr.push_back(unfinished);
     Choice root;
+    root.addText(unfinished);
     return root;
 }
 
@@ -340,7 +339,7 @@ void game::playChoices()
     {
         current->readChoice();
         playConsequences();
-        setCurrent(current->choices[0]);
+        setCurrent(current->choiceAt(0));
         playChoices();
     }
 
@@ -387,7 +386,7 @@ void game::playChoices()
         // Case: Valid input
         else
         {
-            setCurrent(current->choices[intIn-1]);
+            setCurrent(current->choiceAt(intIn - 1));
             cout << endl;
             playChoices();
         }
@@ -398,17 +397,17 @@ void game::playChoices()
 
 Choice game::endChoice()
 {
-    vector<string> endStr;
-    endStr.push_back("");
-    Choice end(endStr);
+    Choice end;
+    end.addText("");
     return end;
 }
 
 void game::playConsequences()
 {
-    if (current->consequences.size() != 0)
+    if (current->numberOfCons() != 0)
     {
-        for (int i: current->consequences)
+        vector<int> temp = current->getCons();
+        for (int i: temp)
         {
             switch (i)
             {
@@ -459,16 +458,13 @@ void game::playConsequences()
     }
 }
 
-
-
-
-
 // if condition is true, change current to something
 void game::playCondConsequences()
 {
-    if (current->conditionalConsequences.size() != 0)
+    if (current->numberOfCondCons() != 0)
     {
-        for (tuple<int, double, int> i : current->conditionalConsequences)
+        auto temp = current->getCondCons();
+        for (tuple<int, double, int> i : temp)
         {
             bool jump = false;
             double num = get<1>(i);
@@ -518,7 +514,7 @@ void game::playCondConsequences()
             CONSEQUENCE:
                 if (jump)
                 {
-                    setCurrent(current->conditionalChoices[get<2>(i)]);
+                    setCurrent(current->choiceAtCond(get<2>(i)));
                     playChoices();
                 }
             }
@@ -549,6 +545,11 @@ void game::condConsHelper(double att, double check, int cond, string txt, bool &
 void game::setCurrent(Choice &choice)
 {
     current = &choice;
+}
+
+void game::setCurrent(Choice* choice)
+{
+    current = choice;
 }
 
 // Consequences
