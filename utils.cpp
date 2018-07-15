@@ -12,7 +12,9 @@ string formatInput()
 
 void quit()
 {
-    cout << "The Game Is Over";
+    cout << "The Game Is Over. Press any key to exit." << endl;
+    string input;
+    cin >> input;
     exit(EXIT_SUCCESS);
 }
 

@@ -85,8 +85,9 @@ Choice game::warriorFightPath()
     defendVillage.addText("At the sight of danger, you enter a battle frenzy, effectively applying all your training in the fight.");
     defendVillage.addText("After a long and arduous battle, you heroicly slay a lot of bandits.");
     defendVillage.addText("The villagers are impressed by your feats. Many are calling you a great hero.");
-    defendVillage.addText("Most of the attackers escape, but you manage to capture one. The general opinion is to have him killed.");
-    defendVillage.addText("But some of the villagers believe that he should be questioned to reveal their hideout.");
+    defendVillage.addText("Most of the attackers escape, but you manage to capture one.");
+    defendVillage.addText("The general opinion is to question the captive about their hideout.");
+    defendVillage.addText("But some of the villagers believe that he should immediately be put to death for his crimes against your village.");
     defendVillage.addText("Before the village council is involved, they turn to you - the hero of the battle - to decide.");
     defendVillage.addText("Press [1] to kill the bandit.");
     defendVillage.addText("Press [2] to question the bandit.");
@@ -103,7 +104,7 @@ Choice game::warriorFightPath()
     killBandit.addText("[1] Run before you are attacked.");
     killBandit.addText("[2] Draw your sword in warning.");
     killBandit.addText("[3] Kill anyone who stands before you.");
-    killBandit.addConsequence(WIS_DROP);
+    //killBandit.addConsequence(WIS_DROP);
 
     Choice relayRunVillage;
     relayRunVillage.addText("You tell yourself that it's not worth getting into a fight.");
@@ -221,18 +222,26 @@ Choice game::warriorFightPath()
 
     Choice runAway;
     runAway.addText("You run away!");
-    runAway.addText(unfinished);
-    runAway.addChoice(fin);
+    //runAway.addText(unfinished);
+    runAway.markRelay();
 
     Choice killElders;
-    killElders.addText("You kill the elders.");
-    killElders.addText(unfinished);
-    killElders.addChoice(fin);
+    killElders.addText("Faced against the threat of the elders, you suddenly draw your sword and launch yourself upon the elders.");
+    killElders.addText("Your sudden onslaught takes everyone by surprise, and you cut through the elders like butter.");
+    killElders.addText("Bathed in blood, you stand before the village as the rest stare at you in awe.");
+    killElders.addText("You see that there are a few choices in front of you.");
+    killElders.addText("[1] Take over the village.");
+    killElders.addText("[2] Leave.");
+
+    Choice villageTakeover;
+    villageTakeover.addText(unfinished);
+    villageTakeover.addChoice(fin);
+
+    killElders.addChoice(villageTakeover);
 
     returnVillage.addChoice(surrenderVillage);
     returnVillage.addChoice(challengeElders);
     returnVillage.addChoice(runAway);
-    returnVillage.addChoice(killElders);
 
     massacreVillage.addChoice(runAway);
 
@@ -240,6 +249,8 @@ Choice game::warriorFightPath()
     outAdventure.addText("You head out into the world for adventure.");
     outAdventure.addText(unfinished);
     outAdventure.addChoice(fin);
+
+    runAway.addChoice(outAdventure);
 
     attackAlone.addChoice(returnVillage);
     attackAlone.addChoice(outAdventure);
@@ -249,6 +260,9 @@ Choice game::warriorFightPath()
     relayAttackAlone.addChoice(attackAlone);
 
     relayLeaveVillage.addChoice(outAdventure);
+
+    killElders.addChoice(relayLeaveVillage);
+    returnVillage.addChoice(killElders);
 
     drawSword.addChoice(relayLeaveVillage);
     drawSword.addChoice(massacreVillage);
