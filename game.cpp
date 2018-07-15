@@ -232,6 +232,19 @@ Choice game::warriorFightPath()
     killElders.addText("You see that there are a few choices in front of you.");
     killElders.addText("[1] Take over the village.");
     killElders.addText("[2] Leave.");
+    killElders.addConsequence(KARMA_DROP);
+    killElders.addConsequence(KARMA_DROP);
+    killElders.addConsequence(KARMA_DROP);
+    killElders.addConsequence(STR_BOOST);
+    killElders.addConsequence(DEF_DROP);
+    killElders.addCondCons(STR_DROP, 0.6, 0);
+
+    Choice killEldersFail;
+    killEldersFail.addText("The villagers kill you.");
+    killEldersFail.addText(unfinished);
+    killEldersFail.addChoice(fin);
+
+    killElders.addCondChoice(killEldersFail);
 
     Choice villageTakeover;
     villageTakeover.addText(unfinished);
@@ -252,9 +265,6 @@ Choice game::warriorFightPath()
 
     runAway.addChoice(outAdventure);
 
-    attackAlone.addChoice(returnVillage);
-    attackAlone.addChoice(outAdventure);
-
     relayRunVillage.addChoice(outAdventure);
 
     relayAttackAlone.addChoice(attackAlone);
@@ -263,6 +273,9 @@ Choice game::warriorFightPath()
 
     killElders.addChoice(relayLeaveVillage);
     returnVillage.addChoice(killElders);
+
+    attackAlone.addChoice(returnVillage);
+    attackAlone.addChoice(outAdventure);
 
     drawSword.addChoice(relayLeaveVillage);
     drawSword.addChoice(massacreVillage);
