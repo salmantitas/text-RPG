@@ -83,3 +83,4 @@ void Choice::markRelay()
 {
     relay = true;
 }
+

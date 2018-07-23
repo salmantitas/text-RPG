@@ -13,11 +13,14 @@ int main()
     string inputClass;
     Player player;
 
-    // Cheat codes for skipping character creation
-    cout << "Input any key to begin the game" << endl;
-    cout << "At any poing, in game, you may press [Q] to quit." << endl;
+    printLine("Input any key to begin the game");
+    printLine("At any poing, in game, you may press [Q] to quit.");
+
     string input = formatInput();
     quitCheck(input);
+
+    // Cheat codes for skipping character creation
+
     if (input == "PLW")
         goto PLW;
     if (input == "PLR")
@@ -53,8 +56,8 @@ int main()
         player.setClass("3");
 
     GAME:
-    cout << "Awesome! Your character has been created. You are ready to begin your adventure!" << endl;
-    cout << "The game has begun!" << endl;
+    printLine("Awesome! Your character has been created. You are ready to begin your adventure!");
+    printLine("The game has begun!");
 
     game newGame(player);
 

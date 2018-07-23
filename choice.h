@@ -14,9 +14,6 @@ private:
     std::vector<std::tuple<int, double, int>> conditionalConsequences;
 
 public:
-
-
-
     Choice();
 
     void addText(std::string str);

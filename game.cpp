@@ -20,7 +20,7 @@ void game::runGame()
 
 	string input;
 	TOP:
-    cout << "Press button to continue" << endl;
+    printLine("Press button to continue");
     input = formatInput();
 
     quitCheck(input);
@@ -78,46 +78,10 @@ Choice game::warriorStoryline()
 // Warrior Path 1: Defend The Village
 Choice game::warriorFightPath()
 {
-    Choice defendVillage;
-    defendVillage.addText("You decide to stay and fight, for honour and for glory.");
-    defendVillage.addText("Should you prevail, you will have saved everyone you know and cared for.");
-    defendVillage.addText("And should you fail, you know you will have died for a good cause.");
-    defendVillage.addText("At the sight of danger, you enter a battle frenzy, effectively applying all your training in the fight.");
-    defendVillage.addText("After a long and arduous battle, you heroicly slay a lot of bandits.");
-    defendVillage.addText("The villagers are impressed by your feats. Many are calling you a great hero.");
-    defendVillage.addText("Most of the attackers escape, but you manage to capture one.");
-    defendVillage.addText("The general opinion is to question the captive about their hideout.");
-    defendVillage.addText("But some of the villagers believe that he should immediately be put to death for his crimes against your village.");
-    defendVillage.addText("Before the village council is involved, they turn to you - the hero of the battle - to decide.");
-    defendVillage.addText("Press [1] to kill the bandit.");
-    defendVillage.addText("Press [2] to question the bandit.");
-    defendVillage.addConsequence(STR_BOOST);
-    defendVillage.addConsequence(DEF_BOOST);
-    defendVillage.addConsequence(AGL_BOOST);
-    defendVillage.addConsequence(KARMA_BOOST);
-
-    Choice killBandit;
-    killBandit.addText("You decide that because of the crime commited against your people, this bandit has no right to live.");
-    killBandit.addText("Your decision angers the entire village.");
-    killBandit.addText("People start panicking as they realize that you destroyed their only source of information.");
-    killBandit.addText("You realize that you will be attacked soon.");
-    killBandit.addText("[1] Run before you are attacked.");
-    killBandit.addText("[2] Draw your sword in warning.");
-    killBandit.addText("[3] Kill anyone who stands before you.");
-    //killBandit.addConsequence(WIS_DROP);
-
     Choice relayRunVillage;
     relayRunVillage.addText("You tell yourself that it's not worth getting into a fight.");
     relayRunVillage.markRelay();
     relayRunVillage.addConsequence(AGL_BOOST);
-
-    Choice drawSword;
-    drawSword.addText("You draw your sword and stand menacingly, challenging any who would dare to attack you.");
-    drawSword.addText("After a moment, it becomes very clear that no one wants to make an enemy of you.");
-    drawSword.addText("[1] Leave the village.");
-    drawSword.addText("[2] Vent your rage and kill everyone around you.");
-    drawSword.addConsequence(INT_BOOST);
-    drawSword.addConsequence(DEF_BOOST);
 
     Choice relayLeaveVillage;
     relayLeaveVillage.addText("You realize that a village where you aren't valued has no meaning to you. So you leave.");
@@ -131,38 +95,14 @@ Choice game::warriorFightPath()
     massacreVillage.addText("[1] Continue fighting.");
     massacreVillage.addText("[2] Run away from the village");
     massacreVillage.addConsequence(STR_BOOST);
-    massacreVillage.addConsequence(KARMA_DROP);
-    massacreVillage.addConsequence(KARMA_DROP);
+    for (int i = 0; i < 6; i++)
+        massacreVillage.addConsequence(KARMA_DROP);
 
     Choice overpowered;
     overpowered.addText("You are overpowered by the villagers. There is no way you could taken them on.");
     overpowered.addText("You are disarmed, and then killed.");
 
     massacreVillage.addChoice(overpowered);
-
-    Choice questionBandit;
-    questionBandit.addText("You ask the bandit about the whereabouts of his fellow criminals. However, the bandit remains silent.");
-    questionBandit.addText("You consider your options. You could torture the bandit until he speaks. Or you could offer him a better deal.");
-    questionBandit.addText("[1] Torture.");
-    questionBandit.addText("[2] Deal.");
-
-    Choice tortureBandit;
-    tortureBandit.addText("You torture the bandit. After a certain point, he breaks and tells you the whereabouts of their last hideout.");
-    tortureBandit.addText("You decide it's time to take the fight to them.");
-    tortureBandit.addText("[1] Attack alone.");
-    tortureBandit.addText("[2] Attempt to raise an army for the attack.");
-    tortureBandit.addConsequence(KARMA_DROP);
-    tortureBandit.addConsequence(STR_BOOST);
-    tortureBandit.addConsequence(WIS_BOOST);
-
-    Choice dealBandit;
-    dealBandit.addText("You offer the bandit a deal. That his past transgressions will be forgiven and will be offered a piece of land.");
-    dealBandit.addText("The offer pleases him. Overjoyed, he gives up the location of his past compatriots.");
-    dealBandit.addText("[1] Attack alone.");
-    dealBandit.addText("[2] Raise an army.");
-    dealBandit.addConsequence(KARMA_BOOST);
-    dealBandit.addConsequence(INT_BOOST);
-    dealBandit.addConsequence(WIS_BOOST);
 
     Choice attackAlone;
     attackAlone.addText("You make your way to the bandit's hideout and attack alone.");
@@ -179,36 +119,10 @@ Choice game::warriorFightPath()
     attackAlone.addCondCons(STR_DROP, 0.5, 0);
     attackAlone.addCondChoice(banditDeath);
 
-    Choice raiseArmy;
-    raiseArmy.addText("You raise an army consisting of the able-bodied men and women from the village.");
-    raiseArmy.addText("The might of your attack takes the wounded and injured bandits by surprise.");
-    raiseArmy.addText("Now that an enemy so close to home has been neutralized, you realize there are necessary things at hand.");
-    raiseArmy.addText("[1] Secure this outpost and fortify it to protect the village from future attacks.");
-    raiseArmy.addText("[2] Return to the village to recount the events.");
-    raiseArmy.addText("[3] Heed the call of the adventurer in you and head out on a journey.");
-    raiseArmy.addCondCons(KARMA_DROP, 90, 0);
-    raiseArmy.addConsequence(STR_BOOST);
-    raiseArmy.addConsequence(DEF_BOOST);
-
-    Choice relayAttackAlone;
-    relayAttackAlone.addText("No one heeds your call to arms.");
-    relayAttackAlone.addText("Frustrated at their lack of faith, you decide to do the only thing that's left.");
-    relayAttackAlone.markRelay();
-
     Choice secureOutpost;
     secureOutpost.addText("You secure the outpost.");
     secureOutpost.addText(unfinished);
     secureOutpost.addChoice(fin);
-
-    Choice returnVillage;
-    returnVillage.addText("You return to the village to deliver the news of the outpost.");
-    returnVillage.addText("Yet, it appears that not everything will pass as smoothly as you had expected.");
-    returnVillage.addText("The elders are not pleased with how the decisions were made without their presence.");
-    returnVillage.addText("For that matter, they've decided to blame you for defying their authority.");
-    returnVillage.addText("[1] Surrender to fate and await judgement.");
-    returnVillage.addText("[2] Challenge the authority of the council.");
-    returnVillage.addText("[3] Run away before they have a chance of confronting you.");
-    returnVillage.addText("[4] Kill all the elders.");
 
     Choice surrenderVillage;
     surrenderVillage.addText("You've surrendered to the village elders.");
@@ -220,10 +134,9 @@ Choice game::warriorFightPath()
     challengeElders.addText(unfinished);
     challengeElders.addChoice(fin);
 
-    Choice runAway;
-    runAway.addText("You run away!");
-    //runAway.addText(unfinished);
-    runAway.markRelay();
+    Choice relayRunAway;
+    relayRunAway.addText("You run away!");
+    relayRunAway.markRelay();
 
     Choice killElders;
     killElders.addText("Faced against the threat of the elders, you suddenly draw your sword and launch yourself upon the elders.");
@@ -232,9 +145,8 @@ Choice game::warriorFightPath()
     killElders.addText("You see that there are a few choices in front of you.");
     killElders.addText("[1] Take over the village.");
     killElders.addText("[2] Leave.");
-    killElders.addConsequence(KARMA_DROP);
-    killElders.addConsequence(KARMA_DROP);
-    killElders.addConsequence(KARMA_DROP);
+    for (int i = 0; i < 6; i++)
+        killElders.addConsequence(KARMA_DROP);
     killElders.addConsequence(STR_BOOST);
     killElders.addConsequence(DEF_DROP);
     killElders.addCondCons(STR_DROP, 0.6, 0);
@@ -252,51 +164,130 @@ Choice game::warriorFightPath()
 
     killElders.addChoice(villageTakeover);
 
+    Choice returnVillage;
+    returnVillage.addText("You return to the village to deliver the news of the outpost.");
+    returnVillage.addText("Yet, it appears that not everything will pass as smoothly as you had expected.");
+    returnVillage.addText("The elders are not pleased with how the decisions were made without their presence.");
+    returnVillage.addText("For that matter, they've decided to blame you for defying their authority.");
+    returnVillage.addText("[1] Surrender to fate and await judgement.");
+    returnVillage.addText("[2] Challenge the authority of the council.");
+    returnVillage.addText("[3] Run away before they have a chance of confronting you.");
+    returnVillage.addText("[4] Kill all the elders.");
     returnVillage.addChoice(surrenderVillage);
     returnVillage.addChoice(challengeElders);
-    returnVillage.addChoice(runAway);
-
-    massacreVillage.addChoice(runAway);
 
     Choice outAdventure;
     outAdventure.addText("You head out into the world for adventure.");
     outAdventure.addText(unfinished);
     outAdventure.addChoice(fin);
 
-    runAway.addChoice(outAdventure);
+    relayRunAway.addChoice(outAdventure);
+
+    returnVillage.addChoice(relayRunAway);
+
+    massacreVillage.addChoice(relayRunAway);
 
     relayRunVillage.addChoice(outAdventure);
-
-    relayAttackAlone.addChoice(attackAlone);
 
     relayLeaveVillage.addChoice(outAdventure);
 
     killElders.addChoice(relayLeaveVillage);
     returnVillage.addChoice(killElders);
 
+
     attackAlone.addChoice(returnVillage);
     attackAlone.addChoice(outAdventure);
 
+    Choice relayAttackAlone;
+    relayAttackAlone.addText("No one heeds your call to arms.");
+    relayAttackAlone.addText("Frustrated at their lack of faith, you decide to do the only thing that's left.");
+    relayAttackAlone.markRelay();
+    relayAttackAlone.addChoice(attackAlone);
+
+    Choice drawSword;
+    drawSword.addText("You draw your sword and stand menacingly, challenging any who would dare to attack you.");
+    drawSword.addText("After a moment, it becomes very clear that no one wants to make an enemy of you.");
+    drawSword.addText("[1] Leave the village.");
+    drawSword.addText("[2] Vent your rage and kill everyone around you.");
+    drawSword.addConsequence(INT_BOOST);
+    drawSword.addConsequence(DEF_BOOST);
     drawSword.addChoice(relayLeaveVillage);
     drawSword.addChoice(massacreVillage);
 
+    Choice killBandit;
+    killBandit.addText("You decide that because of the crime commited against your people, this bandit has no right to live.");
+    killBandit.addText("Your decision angers the entire village.");
+    killBandit.addText("People start panicking as they realize that you destroyed their only source of information.");
+    killBandit.addText("You realize that you will be attacked soon.");
+    killBandit.addText("[1] Run before you are attacked.");
+    killBandit.addText("[2] Draw your sword in warning.");
+    killBandit.addText("[3] Kill anyone who stands before you.");
     killBandit.addChoice(relayRunVillage);
     killBandit.addChoice(drawSword);
     killBandit.addChoice(massacreVillage);
 
+    Choice raiseArmy;
+    raiseArmy.addText("You raise an army consisting of the able-bodied men and women from the village.");
+    raiseArmy.addText("The might of your attack takes the wounded and injured bandits by surprise.");
+    raiseArmy.addText("Now that an enemy so close to home has been neutralized, you realize there are necessary things at hand.");
+    raiseArmy.addText("[1] Secure this outpost and fortify it to protect the village from future attacks.");
+    raiseArmy.addText("[2] Return to the village to recount the events.");
+    raiseArmy.addText("[3] Heed the call of the adventurer in you and head out on a journey.");
+    raiseArmy.addCondCons(KARMA_DROP, 90, 0);
+    raiseArmy.addConsequence(STR_BOOST);
+    raiseArmy.addConsequence(DEF_BOOST);
     raiseArmy.addChoice(secureOutpost);
     raiseArmy.addChoice(returnVillage);
     raiseArmy.addChoice(outAdventure);
     raiseArmy.addCondChoice(relayAttackAlone);
 
+    Choice dealBandit;
+    dealBandit.addText("You offer the bandit a deal. That his past transgressions will be forgiven and will be offered a piece of land.");
+    dealBandit.addText("The offer pleases him. Overjoyed, he gives up the location of his past compatriots.");
+    dealBandit.addText("[1] Attack alone.");
+    dealBandit.addText("[2] Raise an army.");
+    dealBandit.addConsequence(KARMA_BOOST);
+    dealBandit.addConsequence(INT_BOOST);
+    dealBandit.addConsequence(WIS_BOOST);
     dealBandit.addChoice(attackAlone);
     dealBandit.addChoice(raiseArmy);
 
+    Choice tortureBandit;
+    tortureBandit.addText("You torture the bandit. After a certain point, he breaks and tells you the whereabouts of their last hideout.");
+    tortureBandit.addText("You decide it's time to take the fight to them.");
+    tortureBandit.addText("[1] Attack alone.");
+    tortureBandit.addText("[2] Attempt to raise an army for the attack.");
+    tortureBandit.addConsequence(KARMA_DROP);
+    tortureBandit.addConsequence(STR_BOOST);
+    tortureBandit.addConsequence(WIS_BOOST);
     tortureBandit.addChoice(attackAlone);
     tortureBandit.addChoice(raiseArmy);
 
+    Choice questionBandit;
+    questionBandit.addText("You ask the bandit about the whereabouts of his fellow criminals. However, the bandit remains silent.");
+    questionBandit.addText("You consider your options. You could torture the bandit until he speaks. Or you could offer him a better deal.");
+    questionBandit.addText("[1] Torture.");
+    questionBandit.addText("[2] Deal.");
     questionBandit.addChoice(tortureBandit);
     questionBandit.addChoice(dealBandit);
+
+    Choice defendVillage;
+    defendVillage.addText("You decide to stay and fight, for honour and for glory.");
+    defendVillage.addText("Should you prevail, you will have saved everyone you know and cared for.");
+    defendVillage.addText("And should you fail, you know you will have died for a good cause.");
+    defendVillage.addText("At the sight of danger, you enter a battle frenzy, effectively applying all your training in the fight.");
+    defendVillage.addText("After a long and arduous battle, you heroicly slay a lot of bandits.");
+    defendVillage.addText("The villagers are impressed by your feats. Many are calling you a great hero.");
+    defendVillage.addText("Most of the attackers escape, but you manage to capture one.");
+    defendVillage.addText("The general opinion is to question the captive about their hideout.");
+    defendVillage.addText("But some of the villagers believe that he should immediately be put to death for his crimes against your village.");
+    defendVillage.addText("Before the village council is involved, they turn to you - the hero of the battle - to decide.");
+    defendVillage.addText("Press [1] to kill the bandit.");
+    defendVillage.addText("Press [2] to question the bandit.");
+    defendVillage.addConsequence(STR_BOOST);
+    defendVillage.addConsequence(DEF_BOOST);
+    defendVillage.addConsequence(AGL_BOOST);
+    defendVillage.addConsequence(KARMA_BOOST);
 
     defendVillage.addChoice(killBandit);
     defendVillage.addChoice(questionBandit);

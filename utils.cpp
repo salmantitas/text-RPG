@@ -38,3 +38,8 @@ void printLine()
 {
     cout << "--------------------------" << endl;
 }
+
+void printLine(string input)
+{
+    cout << input << endl;
+}

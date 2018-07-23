@@ -13,25 +13,6 @@ private:
     Choice *current;
     bool gameOver = false;
 
-    enum Cons
-    {
-        STR_BOOST,
-        STR_DROP,
-        DEF_BOOST,
-        DEF_DROP,
-        AGL_BOOST,
-        AGL_DROP,
-        DEX_BOOST,
-        DEX_DROP,
-        INT_BOOST,
-        INT_DROP,
-        WIS_BOOST,
-        WIS_DROP,
-        KARMA_BOOST,
-        KARMA_DROP,
-        GAME_OVER,
-    };
-
     Choice warriorStoryline();
 
     Choice warriorFightPath();
