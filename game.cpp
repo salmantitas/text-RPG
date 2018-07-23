@@ -78,6 +78,11 @@ Choice game::warriorStoryline()
 // Warrior Path 1: Defend The Village
 Choice game::warriorFightPath()
 {
+    Choice outAdventure;
+    outAdventure.addText("You head out into the world for adventure.");
+    outAdventure.addText(unfinished);
+    outAdventure.addChoice(fin);
+
     Choice relayRunVillage;
     relayRunVillage.addText("You tell yourself that it's not worth getting into a fight.");
     relayRunVillage.markRelay();
@@ -86,6 +91,10 @@ Choice game::warriorFightPath()
     Choice relayLeaveVillage;
     relayLeaveVillage.addText("You realize that a village where you aren't valued has no meaning to you. So you leave.");
     relayLeaveVillage.markRelay();
+
+    Choice overpowered;
+    overpowered.addText("You are overpowered by the villagers. There is no way you could taken them on.");
+    overpowered.addText("You are disarmed, and then killed.");
 
     Choice massacreVillage;
     massacreVillage.addText("Suddenly you charge yourself on the nearest person, stabbing your sword into him.");
@@ -97,27 +106,10 @@ Choice game::warriorFightPath()
     massacreVillage.addConsequence(STR_BOOST);
     for (int i = 0; i < 6; i++)
         massacreVillage.addConsequence(KARMA_DROP);
-
-    Choice overpowered;
-    overpowered.addText("You are overpowered by the villagers. There is no way you could taken them on.");
-    overpowered.addText("You are disarmed, and then killed.");
-
     massacreVillage.addChoice(overpowered);
-
-    Choice attackAlone;
-    attackAlone.addText("You make your way to the bandit's hideout and attack alone.");
-    attackAlone.addText("You emerge victorious as you slaughter every last one of them.");
-    attackAlone.addText("After the fight, as the battle lust ebbs away, you realize you are a force to be reckoned with.");
-    attackAlone.addText("You could return to your village or you could move forward, see what fate has in store.");
-    attackAlone.addText("[1] Return to the village.");
-    attackAlone.addText("[2] Head out for adventure.");
-    attackAlone.addConsequence(STR_BOOST);
-    attackAlone.addConsequence(AGL_BOOST);
 
     Choice banditDeath;
     banditDeath.addText("The bandits overpower you and kill you.");
-    attackAlone.addCondCons(STR_DROP, 0.5, 0);
-    attackAlone.addCondChoice(banditDeath);
 
     Choice secureOutpost;
     secureOutpost.addText("You secure the outpost.");
@@ -145,6 +137,7 @@ Choice game::warriorFightPath()
     killElders.addText("You see that there are a few choices in front of you.");
     killElders.addText("[1] Take over the village.");
     killElders.addText("[2] Leave.");
+    // drop karma 6 times
     for (int i = 0; i < 6; i++)
         killElders.addConsequence(KARMA_DROP);
     killElders.addConsequence(STR_BOOST);
@@ -163,38 +156,57 @@ Choice game::warriorFightPath()
     villageTakeover.addChoice(fin);
 
     killElders.addChoice(villageTakeover);
+    relayLeaveVillage.addChoice(outAdventure);
 
-    Choice returnVillage;
-    returnVillage.addText("You return to the village to deliver the news of the outpost.");
-    returnVillage.addText("Yet, it appears that not everything will pass as smoothly as you had expected.");
-    returnVillage.addText("The elders are not pleased with how the decisions were made without their presence.");
-    returnVillage.addText("For that matter, they've decided to blame you for defying their authority.");
-    returnVillage.addText("[1] Surrender to fate and await judgement.");
-    returnVillage.addText("[2] Challenge the authority of the council.");
-    returnVillage.addText("[3] Run away before they have a chance of confronting you.");
-    returnVillage.addText("[4] Kill all the elders.");
-    returnVillage.addChoice(surrenderVillage);
-    returnVillage.addChoice(challengeElders);
+    killElders.addChoice(relayLeaveVillage);
 
-    Choice outAdventure;
-    outAdventure.addText("You head out into the world for adventure.");
-    outAdventure.addText(unfinished);
-    outAdventure.addChoice(fin);
+    Choice attemptRun;
+    attemptRun.addText(unfinished);
+    attemptRun.addChoice(fin);
 
     relayRunAway.addChoice(outAdventure);
-
-    returnVillage.addChoice(relayRunAway);
 
     massacreVillage.addChoice(relayRunAway);
 
     relayRunVillage.addChoice(outAdventure);
 
-    relayLeaveVillage.addChoice(outAdventure);
 
-    killElders.addChoice(relayLeaveVillage);
-    returnVillage.addChoice(killElders);
+    Choice faceElders;
+    faceElders.addText("You have decided to allow yourself to be lead to the elders.");
+    faceElders.addText("Upon meeting them, you realize that they demand you be judged for violating the authority of the eldrs.");
+    faceElders.addText("Cornered against the wall, you find that you only have four options at hand.");
+    faceElders.addText("[1] Surrender to fate and await judgement.");
+    faceElders.addText("[2] Challenge the authority of the council.");
+    faceElders.addText("[3] Attempt to run away.");
+    faceElders.addText("[4] Kill all the elders.");
+    faceElders.addChoice(surrenderVillage);
+    faceElders.addChoice(challengeElders);
+    faceElders.addChoice(attemptRun);
+    faceElders.addChoice(killElders);
 
+    Choice returnVillage;
+    returnVillage.addText("You return to the village to deliver the news of the outpost.");
+    returnVillage.addText("You greet the first villager you see, but instead of greeting you with glee, he appears nervous.");
+    returnVillage.addText("Upon questioninig, he reveals that in your absense, the elders have caught up to what had happened.");
+    returnVillage.addText("The elders are not pleased with how the decisions were made without their presence.");
+    returnVillage.addText("For that matter, they've decided to blame you for defying their authority.");
+    returnVillage.addText("You have been ordered to be brought in front of the elders as soon as you return.");
+    returnVillage.addText("[1] Stand before the elders.");
+    returnVillage.addText("[2] Run away before they have a chance of confronting you.");
+    returnVillage.addChoice(faceElders);
+    returnVillage.addChoice(relayRunAway);
 
+    Choice attackAlone;
+    attackAlone.addText("You make your way to the bandit's hideout and attack alone.");
+    attackAlone.addText("You emerge victorious as you slaughter every last one of them.");
+    attackAlone.addText("After the fight, as the battle lust ebbs away, you realize you are a force to be reckoned with.");
+    attackAlone.addText("You could return to your village or you could move forward, see what fate has in store.");
+    attackAlone.addText("[1] Return to the village.");
+    attackAlone.addText("[2] Head out for adventure.");
+    attackAlone.addConsequence(STR_BOOST);
+    attackAlone.addConsequence(AGL_BOOST);
+    attackAlone.addCondCons(STR_DROP, 0.5, 0);
+    attackAlone.addCondChoice(banditDeath);
     attackAlone.addChoice(returnVillage);
     attackAlone.addChoice(outAdventure);
 
