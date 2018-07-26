@@ -364,7 +364,6 @@ void game::playChoices()
                 current->readChoice();
                 playConsequences();
                 setCurrent(current->choiceAt(0));
-                //playChoices();
             }
         else
             {
