@@ -357,70 +357,66 @@ Choice game::mageStoryline()
 
 void game::playChoices()
 {
-    // Base Case: Checks whether it's the end of the path/tree
-    if (current->numberOfChoices() == 0)
-        {
-            current->readChoice();
-            quit();
-        }
-
-    // Case 1: If the Choice is a relay choice, read the text, apply consequences, change the pointer and self recurse to continue game
-    else if (current->getRelay())
+    while (!gameOver)
     {
-        current->readChoice();
-        playConsequences();
-        setCurrent(current->choiceAt(0));
-        playChoices();
-    }
-
-    // Case 3: Continue game. If there are any conditional consequences, play them. Else read the text, apply consequences and change
-    //         the pointer according to user input.
-    else
-    {
-        playCondConsequences();
-        current->readChoice();
-        playConsequences();
-        goto NEXT;
-        TOP:
-            current->readChoice();
-        NEXT:
-            string input;
-            input = formatInput();
-            quitCheck(input);
-            if (input == "S")
+        if (current->getRelay())
             {
-                thyself->showStatus();
-                goto TOP;
+                current->readChoice();
+                playConsequences();
+                setCurrent(current->choiceAt(0));
+                //playChoices();
             }
-
-        int intIn;
-
-        // If input is not a number, try again.
-        try {
-            intIn = stoi(input, nullptr, 10);
-        }
-        catch (std::invalid_argument iaex)
-        {
-            cout << "Invalid Input. Please try again" << endl;
-            cout << endl;
-            goto TOP;
-        }
-
-        // If input number is > 0 or < number of available choices, try again
-        if (intIn == 0 || intIn > current->numberOfChoices())
-        {
-            cout << "Invalid Input. Please try again" << endl;
-            cout << endl;
-            goto TOP;
-        }
-        // Case: Valid input
         else
-        {
-            setCurrent(current->choiceAt(intIn - 1));
-            cout << endl;
-            playChoices();
-        }
+            {
+                playCondConsequences();
+                current->readChoice();
+                playConsequences();
+                goto NEXT;
+                TOP:
+                    current->readChoice();
+                NEXT:
+                    string input;
+                    input = formatInput();
+                    quitCheck(input);
+                    if (input == "S")
+                    {
+                        thyself->showStatus();
+                        goto TOP;
+                    }
+
+                int intIn;
+
+                // If input is not a number, try again.
+                try {
+                    intIn = stoi(input, nullptr, 10);
+                }
+                catch (std::invalid_argument iaex)
+                {
+                    cout << "Invalid Input. Please try again" << endl;
+                    cout << endl;
+                    goto TOP;
+                }
+
+                // If input number is > 0 or < number of available choices, try again
+                if (intIn == 0 || intIn > current->numberOfChoices())
+                {
+                    cout << "Invalid Input. Please try again" << endl;
+                    cout << endl;
+                    goto TOP;
+                }
+                // Case: Valid input
+                else
+                {
+                    setCurrent(current->choiceAt(intIn - 1));
+                    cout << endl;
+                    //playChoices();
+                }
+            }
+            gameOver = (current->numberOfChoices() == 0);
     }
+
+    current->readChoice();
+    quit();
 }
 
 // Helpers//
@@ -545,7 +541,7 @@ void game::playCondConsequences()
                 if (jump)
                 {
                     setCurrent(current->choiceAtCond(get<2>(i)));
-                    playChoices();
+                    //playChoices();
                 }
             }
         }
