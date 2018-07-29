@@ -23,9 +23,9 @@ void Choice::addConsequence(int num)
     consequences.push_back(num);
 }
 
-void Choice::addCondCons(int a, double b, int c)
+void Choice::addCondCons(int id, double requiredStat, int indexOfConditionalChoice)
 {
-    conditionalConsequences.push_back(make_tuple(a,b,c));
+    conditionalConsequences.push_back(make_tuple(id, requiredStat, indexOfConditionalChoice));
 }
 
 void Choice::addCondChoice(Choice &choice)

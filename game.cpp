@@ -81,16 +81,18 @@ Choice game::warriorFightPath()
     Choice outAdventure;
     outAdventure.addText("You head out into the world for adventure.");
     outAdventure.addText(unfinished);
-    outAdventure.addChoice(fin);
+//    outAdventure.addChoice(fin);
 
     Choice relayRunVillage;
     relayRunVillage.addText("You tell yourself that it's not worth getting into a fight.");
     relayRunVillage.markRelay();
     relayRunVillage.addConsequence(AGL_BOOST);
+    relayRunVillage.addChoice(outAdventure);
 
     Choice relayLeaveVillage;
     relayLeaveVillage.addText("You realize that a village where you aren't valued has no meaning to you. So you leave.");
     relayLeaveVillage.markRelay();
+    relayLeaveVillage.addChoice(outAdventure);
 
     Choice overpowered;
     overpowered.addText("You are overpowered by the villagers. There is no way you could taken them on.");
@@ -114,21 +116,24 @@ Choice game::warriorFightPath()
     Choice secureOutpost;
     secureOutpost.addText("You secure the outpost.");
     secureOutpost.addText(unfinished);
-    secureOutpost.addChoice(fin);
+//    secureOutpost.addChoice(fin);
 
     Choice surrenderVillage;
     surrenderVillage.addText("You've surrendered to the village elders.");
     surrenderVillage.addText(unfinished);
-    surrenderVillage.addChoice(fin);
+//    surrenderVillage.addChoice(fin);
 
     Choice challengeElders;
     challengeElders.addText("You have challenged the authority of the elders.");
     challengeElders.addText(unfinished);
-    challengeElders.addChoice(fin);
+//    challengeElders.addChoice(fin);
 
     Choice relayRunAway;
     relayRunAway.addText("You run away!");
     relayRunAway.markRelay();
+    relayRunAway.addChoice(outAdventure);
+
+    massacreVillage.addChoice(relayRunAway);
 
     Choice killElders;
     killElders.addText("Faced against the threat of the elders, you suddenly draw your sword and launch yourself upon the elders.");
@@ -156,20 +161,60 @@ Choice game::warriorFightPath()
     villageTakeover.addChoice(fin);
 
     killElders.addChoice(villageTakeover);
-    relayLeaveVillage.addChoice(outAdventure);
-
     killElders.addChoice(relayLeaveVillage);
 
+    Choice gotoOutpost;
+    gotoOutpost.addText(unfinished);
+
+    Choice jailDeath;
+    jailDeath.addText("You give in to despair. After a few days, you are hanged.");
+
+    Choice jailAttackGuardFail;
+
+    Choice jailAttackGuard;
+
+    Choice relayScream;
+    relayScream.addText("You scream, cursing the villagers and jailers, but no one heeds you.");
+    relayScream.markRelay();
+    relayScream.addConsequence(Cons.STR_DROP);
+
+    Choice jailLockpickFail;
+
+    Choice jailLockpick;
+
+    Choice jailWait;
+    jailWait.addText("You wait and think of what you can do now. You take a look at your cellmates.");
+    jailWait.addText("Of them in particular appears to be an old thief.");
+    jailWait.addText("After a short conversation, he hands you a lockpick, so that you can try your luck.");
+    jailWait.addText("Press [1] to give up hope.");
+    jailWait.addText("Press [2] to attempt to lockpick the door.");
+    jailWait.addText("Press [3] to attack the guard when he opens the door to deliver food.");
+    jailWait.addChoice(jailDeath);
+
+    Choice jail;
+    jail.addText("You have been thrown into the jail in a cell along with some other people. Your fate is uncertain.");
+    jail.addText("Press [1] to give up hope.");
+    jail.addText("Press [2] to scream.");
+    jail.addText("Press [3] to wait and think.");
+    jail.addChoice(jailDeath);
+    jail.addChoice(relayScream);
+    jail.addChoice(jailWait);
+
+    Choice relayAttemptRunFail;
+    relayAttemptRunFail.addText("You try to run away, but you can barely make it to the door before your are captured.");
+    relayAttemptRunFail.markRelay();
+    relayAttemptRunFail.addChoice(jail);
+
     Choice attemptRun;
-    attemptRun.addText(unfinished);
-    attemptRun.addChoice(fin);
-
-    relayRunAway.addChoice(outAdventure);
-
-    massacreVillage.addChoice(relayRunAway);
-
-    relayRunVillage.addChoice(outAdventure);
-
+    attemptRun.addText("Before anyone else realizes, you run for it. You are too fast for anyone to catch.");
+    attemptRun.addText("You make it out of the village, and you count your options.");
+    attemptRun.addText("Press [1] to leave village.");
+    attemptRun.addText("Press [2] to head for the outpost.");
+    attemptRun.addChoice(relayLeaveVillage);
+    attemptRun.addChoice(gotoOutpost);
+    attemptRun.addConsequence(AGL_BOOST);
+    attemptRun.addCondCons(AGL_DROP, 0.5, 0);
+    attemptRun.addCondChoice(relayAttemptRunFail);
 
     Choice faceElders;
     faceElders.addText("You have decided to allow yourself to be lead to the elders.");
@@ -355,22 +400,41 @@ Choice game::mageStoryline()
     return rogueStoryline(); // stub
 }
 
+// The inner loop which runs the game
 void game::playChoices()
 {
     while (!gameOver)
     {
+    	// If the choice is a relay, apply the associated consequences and then move onto the next choice
         if (current->getRelay())
             {
                 current->readChoice();
                 playConsequences();
                 setCurrent(current->choiceAt(0));
             }
+        // If the choices has any conditional consequences, play them first.
         else
             {
                 playCondConsequences();
+
+                // check again for relay, in case the conditional consequences change the current pointer to another relay choice.
+                if (current->getRelay())
+	            {
+	                current->readChoice();
+	                playConsequences();
+	                setCurrent(current->choiceAt(0));
+	            }
+
+	            // if there are no relays and no conditional choices, read the choice, apply consequences and recieve input from
+	            // the user
+	            else
+	            {
+
                 current->readChoice();
                 playConsequences();
                 goto NEXT;
+
+                // read the choice again if the input is invalid
                 TOP:
                     current->readChoice();
                 NEXT:
@@ -396,21 +460,22 @@ void game::playChoices()
                     goto TOP;
                 }
 
-                // If input number is > 0 or < number of available choices, try again
+                // If input number is less than 0 or greater than number of available choices, try again
                 if (intIn == 0 || intIn > current->numberOfChoices())
                 {
                     cout << "Invalid Input. Please try again" << endl;
                     cout << endl;
                     goto TOP;
                 }
-                // Case: Valid input
+
+                // else, in which case the input is valid, change the pointer.
                 else
                 {
                     setCurrent(current->choiceAt(intIn - 1));
                     cout << endl;
-                    //playChoices();
                 }
             }
+        }
             gameOver = (current->numberOfChoices() == 0);
     }
 
@@ -418,7 +483,9 @@ void game::playChoices()
     quit();
 }
 
-// Helpers//
+/***********
+ * Helpers *
+ ***********/
 
 Choice game::endChoice()
 {
@@ -427,8 +494,10 @@ Choice game::endChoice()
     return end;
 }
 
+// Apply consequences from the choices
 void game::playConsequences()
 {
+	// if there are consequences to apply
     if (current->numberOfCons() != 0)
     {
         vector<int> temp = current->getCons();
@@ -483,64 +552,66 @@ void game::playConsequences()
     }
 }
 
-// if condition is true, change current to something
+// if conditional consequences apply, change the current pointer to the appropriate choice
 void game::playCondConsequences()
 {
     if (current->numberOfCondCons() != 0)
     {
         auto temp = current->getCondCons();
-        for (tuple<int, double, int> i : temp)
+        for (tuple<int, double, int> i : temp) // tuple<int enum, double requiredStat, int indexOfConditionalChoice>
         {
-            bool jump = false;
+        	// conditionSatisfied is set to true if any of the conditions for conditional consequences are satisfied.
+            bool conditionSatisfied = false;
             double num = get<1>(i);
             switch(get<0>(i))
             {
             case STR_DROP:
-                condConsHelper(thyself->getSTR(), num, -1, "strength", jump);
+                condConsHelper(thyself->getSTR(), num, -1, "strength", conditionSatisfied);
                 goto CONSEQUENCE;
             case STR_BOOST:
-                condConsHelper(thyself->getSTR(), num, 1, "strength", jump);
+                condConsHelper(thyself->getSTR(), num, 1, "strength", conditionSatisfied);
                 goto CONSEQUENCE;
             case DEF_DROP:
-                condConsHelper(thyself->getDEF(), num, -1, "defense", jump);
+                condConsHelper(thyself->getDEF(), num, -1, "defense", conditionSatisfied);
                 goto CONSEQUENCE;
             case DEF_BOOST:
-                condConsHelper(thyself->getDEF(), num, 1, "defense", jump);
+                condConsHelper(thyself->getDEF(), num, 1, "defense", conditionSatisfied);
                 goto CONSEQUENCE;
             case AGL_DROP:
-                condConsHelper(thyself->getAGL(), num, -1, "agility", jump);
+                condConsHelper(thyself->getAGL(), num, -1, "agility", conditionSatisfied);
                 goto CONSEQUENCE;
             case AGL_BOOST:
-                condConsHelper(thyself->getAGL(), num, 1, "agility", jump);
+                condConsHelper(thyself->getAGL(), num, 1, "agility", conditionSatisfied);
                 goto CONSEQUENCE;
             case DEX_DROP:
-                condConsHelper(thyself->getDEX(), num, -1, "dexterity", jump);
+                condConsHelper(thyself->getDEX(), num, -1, "dexterity", conditionSatisfied);
                 goto CONSEQUENCE;
             case DEX_BOOST:
-                condConsHelper(thyself->getDEX(), num, 1, "dexterity", jump);
+                condConsHelper(thyself->getDEX(), num, 1, "dexterity", conditionSatisfied);
                 goto CONSEQUENCE;
             case INT_DROP:
-                condConsHelper(thyself->getINT(), num, -1, "intelligence", jump);
+                condConsHelper(thyself->getINT(), num, -1, "intelligence", conditionSatisfied);
                 goto CONSEQUENCE;
             case INT_BOOST:
-                condConsHelper(thyself->getINT(), num, 1, "intelligence", jump);
+                condConsHelper(thyself->getINT(), num, 1, "intelligence", conditionSatisfied);
                 goto CONSEQUENCE;
             case WIS_DROP:
-                condConsHelper(thyself->getWIS(), num, -1, "wisdom", jump);
+                condConsHelper(thyself->getWIS(), num, -1, "wisdom", conditionSatisfied);
                 goto CONSEQUENCE;
             case WIS_BOOST:
-                condConsHelper(thyself->getWIS(), num, 1, "wisdom", jump);
+                condConsHelper(thyself->getWIS(), num, 1, "wisdom", conditionSatisfied);
                 goto CONSEQUENCE;
             case KARMA_DROP:
-                condConsHelper(thyself->getKarma(), num, -1, "karma", jump);
+                condConsHelper(thyself->getKarma(), num, -1, "karma", conditionSatisfied);
                 goto CONSEQUENCE;
             case KARMA_BOOST:
-                condConsHelper(thyself->getKarma(), num, 1, "karma", jump);
+                condConsHelper(thyself->getKarma(), num, 1, "karma", conditionSatisfied);
+
             CONSEQUENCE:
-                if (jump)
+            	// if the condition has been satisfied, the pointer will be changed.
+                if (conditionSatisfied)
                 {
                     setCurrent(current->choiceAtCond(get<2>(i)));
-                    //playChoices();
                 }
             }
         }
@@ -549,17 +620,20 @@ void game::playCondConsequences()
 
 void game::condConsHelper(double att, double check, int cond, string txt, bool &jump)
 {
+	// if cond is negative, checks whether the attribute is less than the required.
     if (cond < 0)
     {
         if (att < check)
         {
             cout << "Your " << txt << " was too low." << endl;
+            // sets this to true so that playCondConsequences knows whether the condition has been satisfied
             jump = true;
         }
     }
+    // else checks whether the attribute is more than the required.
     else
     {
-        if (att > check)
+        if (att >= check)
         {
             cout << "Your " << txt << " was enough." << endl;
             jump = true;
@@ -579,7 +653,7 @@ void game::setCurrent(Choice* choice)
 
 // Consequences
 
-// HP
+// HP -- as of now, there has been no use of the HP attribute. Might delete this if I cannot figure out a way to implement this ingame.
 void game::HPBoost(int num)
 {
     int newHP = min(thyself->getHP()+num, thyself->getMaxHP());
@@ -592,26 +666,28 @@ void game::HPDrop(int num)
     thyself->setHP(newHP);
 }
 
+// calculates the change to the player's stat and returns the updated number
 double consHelper(double fna, int num, string str)
 {
-    double curr = fna*10 + num;
+    double curr = fna*10 + num; // multiplies attribute with 10 so that 1 can be added or subtracted.
     int newNum;
     string other;
     if (num > 0)
     {
-        newNum = min((int) curr, 10);
+        newNum = min((int) curr, 10); // prevents the stat from going above 10
         other = " increased ";
     }
     else
     {
-        newNum = max((int) curr, 1);
+        newNum = max((int) curr, 1); // prevents the stat from going below 1
         other = " decreased ";
     }
-    double finNum = ((double) newNum)/10;
-    cout << str << other << "to: " << finNum << endl;
+    double finNum = ((double) newNum)/10; // brings it down to a decimal
+    cout << str << other << "to: " << finNum << endl; // reconstructs the text
     return finNum;
 }
 
+// Behaves in the same manner as consHelper
 int karmaHelper(int fna, int num, string str)
 {
     int curr = fna + num;
@@ -706,4 +782,22 @@ void game::karmaBoost()
 void game::karmaDrop()
 {
     thyself->setKarma(karmaHelper(thyself->getKarma(), -10, "Karma"));
+}
+
+void game::createStatFunctions()
+{
+    statFunctions.push_back(STRBoost);
+    statFunctions.push_back(STRDrop);
+    statFunctions.push_back(DEFBoost);
+    statFunctions.push_back(DEFDrop);
+    statFunctions.push_back(AGLBoost);
+    statFunctions.push_back(AGLDrop);
+    statFunctions.push_back(DEXBoost);
+    statFunctions.push_back(DEXDrop);
+    statFunctions.push_back(INTBoost);
+    statFunctions.push_back(INTDrop);
+    statFunctions.push_back(WISBoost);
+    statFunctions.push_back(WISDrop);
+    statFunctions.push_back(karmaBoost);
+    statFunctions.push_back(karmaDrop);
 }

@@ -9,6 +9,9 @@
 class game
 {
 private:
+    typedef void (game::*statPtr)();
+    std::vector<statPtr> statFunctions;
+
     Choice choiceTree;
     Choice *current;
     bool gameOver = false;
@@ -24,6 +27,8 @@ private:
     Choice rogueStoryline();
 
     Choice endChoice();
+
+    void createStatFunctions();
 
     // Consequences
 

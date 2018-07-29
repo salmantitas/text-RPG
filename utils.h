@@ -36,4 +36,10 @@ enum Cons
         GAME_OVER,
     };
 
+enum Comp
+{
+    down = 1,
+    up = 1,
+};
+
 #endif // UTILS_H

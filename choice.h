@@ -11,7 +11,7 @@ private:
     std::vector<Choice> choices;
     std::vector<Choice> conditionalChoices;
     std::vector<int> consequences;
-    std::vector<std::tuple<int, double, int>> conditionalConsequences;
+    std::vector<std::tuple<int, double, int>> conditionalConsequences; // tuple<int enum, double requiredStat, int indexOfConditionalChoice>
 
 public:
     Choice();
@@ -22,7 +22,7 @@ public:
 
     void addConsequence(int num);
 
-    void addCondCons(int a, double b, int c);
+    void addCondCons(int id, double requiredStat, int indexOfConditionalChoice); 
 
     void addCondChoice(Choice &choice);
 
