@@ -7,14 +7,14 @@ vector<string> emptyVtr;
 game::game(Player &player)
 {
     thyself = &player;
+    createStatFunctions();
+    createStory();
     runGame();
 }
 
 // Creates the choices and initiates the game
 void game::runGame()
 {
-    createStory();
-
 	string input;
 	TOP:
     printLine("Press button to continue");
@@ -146,8 +146,11 @@ void game::playConsequences()
     if (current->numberOfCons() != 0)
     {
         vector<int> temp = current->getCons();
-        for (int i: temp)
-        {
+
+        for (int i: temp) {
+//            statMap.at(i);
+//            printLine("Should be doing something");
+//        }
             switch (i)
             {
             case STR_BOOST:
@@ -431,18 +434,18 @@ void game::karmaDrop()
 
 void game::createStatFunctions()
 {
-    statFunctions.push_back(STRBoost);
-    statFunctions.push_back(STRDrop);
-    statFunctions.push_back(DEFBoost);
-    statFunctions.push_back(DEFDrop);
-    statFunctions.push_back(AGLBoost);
-    statFunctions.push_back(AGLDrop);
-    statFunctions.push_back(DEXBoost);
-    statFunctions.push_back(DEXDrop);
-    statFunctions.push_back(INTBoost);
-    statFunctions.push_back(INTDrop);
-    statFunctions.push_back(WISBoost);
-    statFunctions.push_back(WISDrop);
-    statFunctions.push_back(karmaBoost);
-    statFunctions.push_back(karmaDrop);
+    statMap.emplace(STR_BOOST, &STRBoost);
+    statMap.emplace(STR_DROP, &STRDrop);
+    statMap.emplace(DEF_BOOST, &DEFBoost);
+    statMap.emplace(DEF_DROP, &DEFDrop);
+    statMap.emplace(AGL_BOOST, &AGLBoost);
+    statMap.emplace(AGL_DROP, &AGLDrop);
+    statMap.emplace(DEX_BOOST, &DEXBoost);
+    statMap.emplace(DEX_DROP, &DEXDrop);
+    statMap.emplace(INT_BOOST, &INTBoost);
+    statMap.emplace(INT_DROP, &INTDrop);
+    statMap.emplace(WIS_BOOST, &WISBoost);
+    statMap.emplace(WIS_DROP, &WISDrop);
+    statMap.emplace(KARMA_BOOST, &karmaBoost);
+    statMap.emplace(KARMA_DROP, &karmaDrop);
 }

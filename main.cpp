@@ -28,7 +28,7 @@ int main()
     printLine("Would you like to stick to this class?");
 
     input = formatInput();
-    if (input == "Y") {
+    if (input == "N") {
         charCreate.reselectClass(player);
         goto CLASS;
     }

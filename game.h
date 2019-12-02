@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <math.h>
+#include <map>
 
 #include "player.h"
 #include "utils.h"
@@ -12,8 +13,10 @@
 class game
 {
 private:
-    typedef void (game::*statPtr)();
-    std::vector<statPtr> statFunctions;
+    typedef void (game::*statPtr)(void);
+    typedef std::map<int, statPtr> functionMap;
+
+    functionMap statMap;
 
     Choice choiceTree;
     Choice *current;
@@ -62,6 +65,8 @@ private:
     void setCurrent(Choice &choice);
 
     void setCurrent(Choice* choice);
+
+    void createStatMap();
 
 public:
     Player *thyself; // For comic purposes

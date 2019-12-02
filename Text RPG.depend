@@ -122,22 +122,23 @@
 	<vector>
 	<tuple>
 
-1575262003 source:e:\text-rpg\main.cpp
+1575270848 source:e:\text-rpg\main.cpp
 	<iostream>
 	"charCreate.h"
 	"player.h"
 	"utils.h"
 	"game.h"
 
-1575268815 e:\text-rpg\game.h
+1575270494 e:\text-rpg\game.h
 	<iostream>
 	<math.h>
+	<map>
 	"player.h"
 	"utils.h"
 	"choice.h"
 	"story.h"
 
-1575268815 source:e:\text-rpg\game.cpp
+1575270795 source:e:\text-rpg\game.cpp
 	"game.h"
 
 1575252732 e:\text-rpg\story.h
