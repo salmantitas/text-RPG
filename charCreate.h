@@ -4,24 +4,19 @@
 #include "player.h"
 #include "utils.h"
 
+using namespace std;
+
 class charCreate{
 
 public:
-    charCreate(std::string &inputName, std::string &inputClass);
-
-    void tutorial();
-
-    void selectClass(std::string &inputClass);
-
-    //void showStatus(Player player);
-
-    void rechoice(Player &player);
-
-private:
-
-    void reselectName(Player &player);
+    charCreate(string &inputClass);
 
     void reselectClass(Player &player);
+
+private:
+    void tutorial();
+
+    void selectClass(string &inputClass);
 };
 
 #endif // CHARCREATE_H

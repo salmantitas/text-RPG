@@ -1,6 +1,6 @@
 #include "charCreate.h"
 
-charCreate::charCreate(string &inputName, string &inputClass)
+charCreate::charCreate(string &inputClass)
 {
     tutorial();
     selectClass(inputClass);
@@ -107,8 +107,8 @@ void charCreate::selectClass(string &inputClass) {
     else
     {
         cout << endl;
-    	cout << "Invalid choice. Please try again.";
-    	cout << endl;
+    	invalidInput();
+        printLine();
     	goto CLASS;
     }
 }

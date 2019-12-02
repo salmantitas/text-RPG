@@ -78,7 +78,7 @@ void game::playChoices()
 	                setCurrent(current->choiceAt(0));
 	            }
 
-	            // if there are no relays and no conditional choices, read the choice, apply consequences and recieve input from
+	            // if there are no relays and no conditional choices, read the choice, apply consequences and receive input from
 	            // the user
 	            else
 	            {
@@ -93,7 +93,6 @@ void game::playChoices()
                 NEXT:
                     string input;
                     input = formatInput();
-                    quitCheck(input);
                     if (input == "S")
                     {
                         thyself->showStatus();
@@ -104,11 +103,11 @@ void game::playChoices()
 
                 // If input is not a number, try again.
                 try {
-                    intIn = getIntFromString(input);//stoi(input, nullptr, 10);
+                    intIn = getIntFromString(input);
                 }
                 catch (std::invalid_argument iaex)
                 {
-                    cout << "Invalid Input. Please try again" << endl;
+                    invalidInput();
                     cout << endl;
                     goto TOP;
                 }
@@ -116,7 +115,7 @@ void game::playChoices()
                 // If input number is less than 0 or greater than number of available choices, try again
                 if (intIn == 0 || intIn > current->numberOfChoices())
                 {
-                    cout << "Invalid Input. Please try again" << endl;
+                    invalidInput();
                     cout << endl;
                     goto TOP;
                 }

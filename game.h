@@ -1,7 +1,9 @@
 #ifndef GAME_H
 #define GAME_H
+
 #include <iostream>
 #include <math.h>
+
 #include "player.h"
 #include "utils.h"
 #include "choice.h"

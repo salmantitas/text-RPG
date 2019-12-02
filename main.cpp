@@ -9,7 +9,6 @@ using namespace std;
 // Runs the game, initializing character creation and gameplay
 int main()
 {
-    string inputName;
     string inputClass;
     Player player;
 
@@ -19,22 +18,28 @@ int main()
     string input = formatInput();
 
     // Start Character Creation
-    {
-        charCreate charCreate(inputName, inputClass);
-        player.setClass(inputClass);
-        player.showStatus();
-        goto GAME;
+
+    charCreate charCreate(inputClass);
+    player.setClass(inputClass);
+
+    CLASS:
+
+    player.showStatus();
+    printLine("Would you like to stick to this class?");
+
+    input = formatInput();
+    if (input == "Y") {
+        charCreate.reselectClass(player);
+        goto CLASS;
     }
 
     // End Character Creation
 
-    GAME:
     printLine("Awesome! Your character has been created. You are ready to begin your adventure!");
     printLine("The game has begun!");
 
     game newGame(player);
 
-    while(1);
-
+    // In case the game manages to break out of the loop without quitting
     quit();
 }
