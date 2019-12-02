@@ -1,16 +1,8 @@
 #include "player.h"
 
-Player::Player(string inputName, string inputClass)
+Player::Player(string inputClass)
 {
-    setName(inputName);
     setClass(inputClass);
-}
-
-string Player::getName() {return name;};
-
-void Player::setName(string inputName)
-{
-    name = inputName;
 }
 
 int Player::getMaxHP() {return maxHP;};
@@ -129,7 +121,6 @@ void Player::setClass(string inputClass)
 }
 
 void Player::showStatus(){
-   cout << "You are " << name << endl;
    cout << "Your HP is " << HP << "/" << maxHP << endl;
    cout << "You have chosen class " << getClassName() << endl;
    printSpace();

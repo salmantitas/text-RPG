@@ -9,7 +9,7 @@ class charCreate{
 public:
     charCreate(std::string &inputName, std::string &inputClass);
 
-    void selectName(std::string &inputName);
+    void tutorial();
 
     void selectClass(std::string &inputClass);
 

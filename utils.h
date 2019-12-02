@@ -4,21 +4,11 @@
 #include <algorithm>
 
 std::string formatInput();
-
-void quit();
-
-void quitCheck(std::string input);
-
-void printSpace();
-
-void printStat(std::string txt, double num);
-
-void printLine();
-
-void printLine(std::string input);
-
-enum Cons
-    {
+    void printSpace();
+    void printStat(std::string txt, double num);
+    void printLine();
+    void printLine(std::string input);
+    enum Cons {
         STR_BOOST,
         STR_DROP,
         DEF_BOOST,
@@ -36,10 +26,17 @@ enum Cons
         GAME_OVER,
     };
 
-enum Comp
-{
-    down = 1,
-    up = 1,
-};
+    enum Comp {
+        down = 1,
+        up = 1,
+        };
+
+    int getIntFromString(std::string str);
+
+    void quit();
+
+    void quitCheck(std::string input);
+
+    void invalidInput();
 
 #endif // UTILS_H

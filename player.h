@@ -10,7 +10,6 @@ using namespace std;
 class Player
 {
     private:
-        string name;
         string playerClass;
 
         int maxHP;
@@ -24,13 +23,9 @@ class Player
         int karma;
 
     public:
-        Player() : name(""), maxHP(-1), HP(-1), playerClass("") {}
+        Player() : maxHP(-1), HP(-1), playerClass("") {}
 
-        Player(string inputName, string inputClass);
-
-        string getName();
-
-        void setName(string inputName);
+        Player(string inputClass);
 
         int getMaxHP();
 

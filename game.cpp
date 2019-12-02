@@ -13,7 +13,7 @@ game::game(Player &player)
 // Creates the choices and initiates the game
 void game::runGame()
 {
-    createChoices();
+    createStory();
 
 	string input;
 	TOP:
@@ -33,14 +33,9 @@ void game::runGame()
     quit();
 }
 
-// Creates appropriate storyline based on the player's class
-void game::createChoices()
-{
-    int plc = stoi(thyself->getClass(), nullptr, 10);
-    createStory(plc);
-}
+void game::createStory() {
+    int plc = stoi(thyself->getClass(), nullptr, 10); // Gets integer
 
-void game::createStory(int plc) {
     Story story;
 
     switch(plc)
@@ -109,7 +104,7 @@ void game::playChoices()
 
                 // If input is not a number, try again.
                 try {
-                    intIn = stoi(input, nullptr, 10);
+                    intIn = getIntFromString(input);//stoi(input, nullptr, 10);
                 }
                 catch (std::invalid_argument iaex)
                 {

@@ -17,7 +17,7 @@ private:
     Choice *current;
     bool gameOver = false;
 
-    void createStory(int plc);
+    void createStory();
 
     void createStatFunctions();
 

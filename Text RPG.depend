@@ -92,26 +92,26 @@
 1532891168 source:d:\text-rpg\game.cpp
 	"game.h"
 
-1543712614 source:e:\text-rpg\charcreate.cpp
+1575260071 source:e:\text-rpg\charcreate.cpp
 	"charCreate.h"
 
-1543712614 e:\text-rpg\charcreate.h
+1575256516 e:\text-rpg\charcreate.h
 	<iostream>
 	"player.h"
 	"utils.h"
 
-1543712614 e:\text-rpg\player.h
+1575260123 e:\text-rpg\player.h
 	<iostream>
 	"utils.h"
 
-1543712614 e:\text-rpg\utils.h
+1575258696 e:\text-rpg\utils.h
 	<iostream>
 	<algorithm>
 
-1543712614 source:e:\text-rpg\player.cpp
+1575260147 source:e:\text-rpg\player.cpp
 	"player.h"
 
-1543712614 source:e:\text-rpg\utils.cpp
+1575258718 source:e:\text-rpg\utils.cpp
 	"utils.h"
 
 1543712614 source:e:\text-rpg\choice.cpp
@@ -122,14 +122,14 @@
 	<vector>
 	<tuple>
 
-1569800101 source:e:\text-rpg\main.cpp
+1575260087 source:e:\text-rpg\main.cpp
 	<iostream>
 	"charCreate.h"
 	"player.h"
 	"utils.h"
 	"game.h"
 
-1575253095 e:\text-rpg\game.h
+1575253395 e:\text-rpg\game.h
 	<iostream>
 	<math.h>
 	"player.h"
@@ -137,7 +137,7 @@
 	"choice.h"
 	"story.h"
 
-1575253008 source:e:\text-rpg\game.cpp
+1575254367 source:e:\text-rpg\game.cpp
 	"game.h"
 
 1575252732 e:\text-rpg\story.h
