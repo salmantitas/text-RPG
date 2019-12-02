@@ -14,7 +14,7 @@ int main()
     Player player;
 
     printLine("Input any key to begin the game");
-    printLine("At any poing, in game, you may press [Q] to quit.");
+    printLine("At any point, in game, you may press [Q] to quit.");
 
     string input = formatInput();
     quitCheck(input);

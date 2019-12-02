@@ -5,6 +5,7 @@
 #include "player.h"
 #include "utils.h"
 #include "choice.h"
+#include "story.h"
 
 class game
 {
@@ -16,17 +17,7 @@ private:
     Choice *current;
     bool gameOver = false;
 
-    Choice warriorStoryline();
-
-    Choice warriorFightPath();
-
-    Choice warriorRunPath();
-
-    Choice mageStoryline();
-
-    Choice rogueStoryline();
-
-    Choice endChoice();
+    void createStory(int plc);
 
     void createStatFunctions();
 
